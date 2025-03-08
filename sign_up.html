@@ -28,7 +28,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Link to styles of your own -->
-    <!-- <link rel="stylesheet" href="./styles/style.css"> -->
+    <link rel="stylesheet" href="./styles/style.css">
 
 </head>
 
@@ -82,21 +82,63 @@
             </div>
         </div>
     </nav>
-    <div>
-        hello world
+
+
+    <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+        <div class="row shadow-lg rounded p-4" id="signup-form">
+            <!-- Left　side -->
+            <div class="col-md-6 d-none d-md-block p-0">
+                <img src="./images/moving_woman.jpg" alt="Signup Illustration" class="img-fluid rounded-start"
+                    id="signup-illustration" />
+            </div>
+
+            <!-- Right side -->
+            <div class="col-md-6 p-4">
+                <h2 class="text-center mb-4">Create an Account</h2>
+                <p class="text-center">Already have an account?
+                    <a href="sign_in.html" class="text-primary">Login</a>
+                </p>
+                <form action="">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="first_name" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name"
+                                placeholder="First name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="last_name" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name"
+                                placeholder="Last name" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone number"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Location</label>
+                        <select class="form-select" id="location" name="location" required>
+                            <option selected disabled>Select your location</option>
+                            <option value="1">Vancouver</option>
+                            <option value="2">Burnaby</option>
+                            <option value="3">Surrey</option>
+                            <option value="4">Richmond</option>
+                            <option value="5">New Westminster</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 mb-3">Sign Up</button>
+                </form>
+
+            </div>
+        </div>
     </div>
 
 
-    <!-- copyright footer -->
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <p class="col-md-4 mb-0 text-muted">&copy; 2022 BCIT COMP1800</p>
-        <a href="/"
-            class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-            <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#bootstrap" />
-            </svg>
-        </a>
-    </footer>
 
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
