@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ReloCash</title>
+    <meta name="ReloCash template" content="ReloCash App">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap Library CSS CDN go here -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Boostrap Library JS CDN  go here -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <!-- Other libraries go here -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <!-- Google Icons (Material Design)-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Link to styles of your own -->
+    <link rel="stylesheet" href="./styles/style.css">
+
+</head>
+
+<body>
+    <!------------------------------>
+    <!-- Your HTML Layout go here -->
+    <!------------------------------>
+
+    <nav class="navbar navbar-expand-lg border-bottom border-body fixed-top px-5" data-bs-theme="dark"
+        style="background-color: #000;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="./images/relocash_logo.png" height="35">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mx-auto mb-2 mb-lg-0 gap-lg-5">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            style="color: white;" data-bs-toggle="dropdown" aria-expanded="false">
+                            Top Categories
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Electronics & Appliances</a></li>
+                            <li><a class="dropdown-item" href="#">Furniture</a></li>
+                            <li><a class="dropdown-item" href="#">Garden</a></li>
+                            <li><a class="dropdown-item" href="#">Women's Fashion</a></li>
+                            <li><a class="dropdown-item" href="#">Men's Fashion</a></li>
+                            <li><a class="dropdown-item" href="#">Baby & Kids</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">All Categories</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled">Profile</a>
+                    </li>
+                </ul>
+                <button class="btn btn-login" type="button">Login/Signup</button>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container vh-100 d-flex align-items-center justify-content-center">
+        <div class="row shadow-lg rounded p-4 w-75" id="add-item-form">
+            <h2 class="text-center mb-4">Add New Item</h2>
+            <form>
+                <div class="mb-3">
+                    <label for="listing-name" class="form-label">Item Name</label>
+                    <input type="text" class="form-control" id="listing-name" name="listing-name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="listing-description" class="form-label">Description</label>
+                    <textarea class="form-control" id="listing-description" name="listing-description" rows="3"
+                        required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="listing-price" class="form-label">Price ($)</label>
+                    <input type="number" class="form-control" id="listing-price" name="listing-price" min="0"
+                        step="0.01" required>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="listing-isFree" name="listing-isFree">
+                    <label class="form-check-label" for="listing-isFree">This item is free</label>
+                </div>
+
+                <div class="mb-3">
+                    <label for="listing-category" class="form-label">Category</label>
+                    <select class="form-select" id="listing-category" name="listing-category" required>
+                        <option value="Electronics & Appliances">Electronics & Appliances</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Home & Garden">Home & Garden</option>
+                        <option value="Baby & Kids">Baby & Kids</option>
+                        <option value="Women's Fashion">Women's Fashion</option>
+                        <option value="Men's Fashion">Men's Fashion</option>
+                        <option value="Health & Beauty">Health & Beauty</option>
+                        <option value="Sports & Outdoors">Sports & Outdoors</option>
+                        <option value="Games & Hobbies">Games & Hobbies</option>
+                        <option value="Books & Music">Books & Music</option>
+                        <option value="Pet Supplies">Pet Supplies</option>
+                        <option value="Vehicles & Parts">Vehicles & Parts</option>
+                        <option value="Other">Others</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="listing-condition" class="form-label">Condition</label>
+                    <select class="form-select" id="listing-condition" name="listing-condition" required>
+                        <option value="new">New</option>
+                        <option value="used-like new">Used - Like New</option>
+                        <option value="used-good">Used - Good</option>
+                        <option value="used-fair">Used - Fair</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="listing-photo" class="form-label">Upload Photo</label>
+                    <input type="file" class="form-control" id="listing-photo" name="listing-photo" accept="image/*"
+                        multiple required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Add Item</button>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!---------------------------------------------->
+    <!-- Your own JavaScript functions go here    -->
+    <!---------------------------------------------->
+    <!-- Link to scripts of your own -->
+    <!-- <script src="./scripts/script.js"></script> -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const priceInput = document.getElementById("listing-price");
+            const freeCheckbox = document.getElementById("listing-isFree");
+
+            // Control the price input field based on the checkbox
+            freeCheckbox.addEventListener("change", function () {
+                priceInput.disabled = this.checked;
+                if (this.checked) {
+                    priceInput.value = ""; // Clear the value if the checkbox is checked
+                }
+            });
+
+            priceInput.addEventListener("input", function () {
+                const value = parseFloat(this.value);
+                if (!isNaN(value)) {
+                    this.value = value.toFixed(2);
+                }
+            });
+
+        });
+    </script>
+</body>
+
+</html>
