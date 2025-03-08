@@ -148,3 +148,13 @@ body {
 .right-btn {
     right: 10px;
 }
+
+#signup-illustration {
+    width: 100%;
+    object-fit: cover;
+}
+
+#signup-form {
+    max-width: 900px;
+    width: 100%;
+}
