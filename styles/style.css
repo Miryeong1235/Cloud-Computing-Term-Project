@@ -1,7 +1,8 @@
 :root {
     --primary-color: #65B891;
     --secondary-color: #93E5AB;
-    --tertiary-color: #4E878C
+    --tertiary-color: #4E878C;
+    --background-color: #121212;
 }
 
 /* .montserrat-<uniquifier> {
@@ -12,7 +13,7 @@
 } */
 
 body {
-    background-color: #121212;
+    background-color: var(--background-color);
     color: #ffffff;
     font-family: Montserrat, sans-serif;
     margin: 0;
@@ -22,17 +23,22 @@ body {
 .btn-login {
     color: var(--primary-color);
     border-color: var(--primary-color);
-    background-color: transparent; /* No background */
+    background-color: transparent;
+    /* No background */
 }
+
 .btn-login:hover {
-    color: #fff; /* White text */
+    color: #fff;
+    /* White text */
     background-color: var(--primary-color);
     border-color: var(--primary-color);
 }
+
 .btn-login-big {
     color: white;
     background-color: var(--primary-color)
 }
+
 .btn-login-big:hover {
     background-color: var(--tertiary-color);
 }
@@ -42,25 +48,34 @@ body {
     overflow: hidden;
     cursor: pointer;
 }
+
 .card img {
-    max-width: 100%; /* Makes sure image does not exceed container width */
-    height: auto; /* Keeps aspect ratio */
+    max-width: 100%;
+    /* Makes sure image does not exceed container width */
+    height: auto;
+    /* Keeps aspect ratio */
     object-fit: contain;
     transition: transform 0.2s ease-out;
-    border-radius: 15px; /* Matches card's rounded corners */
+    border-radius: 15px;
+    /* Matches card's rounded corners */
 }
+
 .card:hover img {
     transform: scale(1.1);
     transition: .1s ease-in;
 }
+
 .card-price {
     font-weight: bold;
     color: var(--primary-color);
 }
-.card-title, .card-desc {
+
+.card-title,
+.card-desc {
     font-size: 1.1rem;
     color: white;
 }
+
 .card-location {
     margin-bottom: 0;
     color: var(--tertiary-color);
@@ -74,9 +89,12 @@ body {
     padding: 20px;
     width: 100%;
 }
+
 .scroll-container::-webkit-scrollbar {
-    display: none; /* Hide scrollbar */
+    display: none;
+    /* Hide scrollbar */
 }
+
 .category {
     flex: 0 0 auto;
     width: 150px;
@@ -91,16 +109,22 @@ body {
     text-align: center;
     overflow: hidden;
 }
+
 .category img {
-    max-width: 100%; /* Makes sure image does not exceed container width */
-    height: auto; /* Keeps aspect ratio */
-    display: block; /* Removes extra space below inline images */
+    max-width: 100%;
+    /* Makes sure image does not exceed container width */
+    height: auto;
+    /* Keeps aspect ratio */
+    display: block;
+    /* Removes extra space below inline images */
     transition: transform 0.2s ease-out;
 }
+
 .category:hover img {
     transform: scale(1.1);
     transition: .1s ease-in;
-  }
+}
+
 .scroll-btn {
     position: absolute;
     top: 50%;
@@ -116,5 +140,11 @@ body {
     justify-content: center;
     cursor: pointer;
 }
-.left-btn { left: 10px; }
-.right-btn { right: 10px; }
+
+.left-btn {
+    left: 10px;
+}
+
+.right-btn {
+    right: 10px;
+}
