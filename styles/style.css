@@ -194,3 +194,13 @@ body {
     max-width: 900px;
     width: 100%;
 }
+
+
+/*Items Page*/
+.mt-large {
+    margin-top: 5rem;
+}
+.item-category {
+    font-weight: bold;
+    color: var(--primary-color);
+}
