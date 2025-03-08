@@ -158,17 +158,21 @@ body {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 }
+
 .profile-pic {
     width: 120px;
     height: 120px;
     border-radius: 50%;
     border: 4px solid white;
 }
+
 .nav-link {
-    color: #333; /* Default text color */
+    color: #333;
+    /* Default text color */
     font-weight: bold;
     padding: 10px 15px;
-    border-radius: 5px 5px 0 0; /* Rounded top corners */
+    border-radius: 5px 5px 0 0;
+    /* Rounded top corners */
     transition: background-color 0.3s ease-in-out;
 }
 
@@ -203,4 +207,9 @@ body {
 .item-category {
     font-weight: bold;
     color: var(--primary-color);
+}
+
+#signin-illustration {
+    height: 100%;
+    object-fit: cover;
 }
