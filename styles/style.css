@@ -199,7 +199,12 @@ body {
     width: 100%;
 }
 
-#signin-illustration {
-    height: 100%;
-    object-fit: cover;
+
+/*Items Page*/
+.mt-large {
+    margin-top: 5rem;
+}
+.item-category {
+    font-weight: bold;
+    color: var(--primary-color);
 }
