@@ -204,7 +204,41 @@ body {
 .mt-large {
     margin-top: 5rem;
 }
+
 .item-category {
     font-weight: bold;
     color: var(--primary-color);
+}
+
+
+/* About Section */
+.about-section {
+    padding: 80px 0;
+}
+
+.about-title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.about-text {
+    font-size: 1rem;
+    margin: 20px 0;
+}
+
+.about-btn {
+    background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+}
+
+.about-btn:hover {
+    background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+}
+
+/* Image Styling */
+.about-image {
+    max-width: 100%;
+    height: auto;
 }
