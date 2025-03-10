@@ -51,12 +51,13 @@
             <source src="./images/hero_section_bg.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-    
+
         <!-- Dark Overlay -->
         <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
-    
+
         <!-- Hero Content -->
-        <div class="container position-relative z-1 d-flex flex-column justify-content-center align-items-start h-100 text-white">
+        <div
+            class="container position-relative z-1 d-flex flex-column justify-content-center align-items-start h-100 text-white">
             <h1 class="display-3 fw-bold">Welcome to ReloCash</h1>
             <p class="lead w-50">
                 The Marketplace for Movers!
@@ -104,17 +105,17 @@
     <!-- Has a "card-image", "card-title", and "card-description" -->
     <template id="postCardTemplate">
         <div class="card airbnb-card" style="width: 18rem; background-color: #121212;">
-          <img src="..." class="card-image card-img-top" alt="..">
-          <div class="card-body">
-              <div class="d-flex justify-content-between">
-                  <h5 class="card-title">card title placeholder</h5>
-                  <p class="card-price">price placeholder</p>
-              </div>
-              <p class="card-desc">desc placeholder</p>
-              <p class="card-location"><strong>location placeholder</strong></p>
-          </div>
+            <img src="..." class="card-image card-img-top" alt="..">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h5 class="card-title">card title placeholder</h5>
+                    <p class="card-price">price placeholder</p>
+                </div>
+                <p class="card-desc">desc placeholder</p>
+                <p class="card-location"><strong>location placeholder</strong></p>
+            </div>
         </div>
-      </template>
+    </template>
 
 
     <div class="categories position-relative p-5">
@@ -217,6 +218,8 @@
         <button class="scroll-btn right-btn" onclick="scrollRight()">❯</button>
     </div>
 
+    <div id="footer-container"></div>
+
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
     <!---------------------------------------------->
@@ -234,6 +237,8 @@
     <!-- Link to scripts of your own -->
     <!-- <script src="./scripts/script.js"></script> -->
     <script src="nav.js"></script>
+    <script src="footer.js"></script>
+
 
 </body>
 
