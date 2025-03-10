@@ -45,22 +45,33 @@
 
     <div id="navbar-container"></div>
 
-    <div class="p-5 mb-4 rounded-3">
-        <div class="container-fluid py-5">
-            <h1 class="display-5 fw-bold">Welcome to ReloCash!</h1>
-            <p class="col-md-8 fs-4">as aslah ofj aslidfjal sfkh </p>
-
-            <button class="btn btn-login-big btn-lg" type="button">Login/Signup</button>
-
-            <!-- Add an onclick attribute to define click event handler -->
-            <!-- <button onclick="window.location.href='login.html'" class="btn btn-primary btn-lg" type="button">Login/Signup</button> -->
+    <div class="position-relative vh-100 overflow-hidden">
+        <!-- Background Video -->
+        <video autoplay muted loop class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover">
+            <source src="./images/hero_section_bg.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    
+        <!-- Dark Overlay -->
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
+    
+        <!-- Hero Content -->
+        <div class="container position-relative z-1 d-flex flex-column justify-content-center align-items-start h-100 text-white">
+            <h1 class="display-3 fw-bold">Welcome to ReloCash</h1>
+            <p class="lead w-50">
+                The Marketplace for Movers!
+            </p>
+            <button class="btn btn-login-big btn-lg fw-semibold d-flex align-items-center">
+                Login/Signup
+                <span class="ms-2">→</span>
+            </button>
         </div>
     </div>
 
 
     <section class="p-5">
         <h2>Recently listed items</h2>
-        <div class="items-container d-flex gap-4" id="items-container">
+        <div class="items-container d-flex gap-4 row row-cols-auto" id="items-container">
             <!-- Items will be loaded here dynamically -->
             <div class="card" style="width: 18rem; background-color: #121212;">
                 <img src="./images/couch.jpg" class="card-img-top" alt="House">
@@ -89,6 +100,22 @@
         </div>
     </section>
 
+    <!-- Templates for general use, not displayed -->
+    <!-- Has a "card-image", "card-title", and "card-description" -->
+    <template id="postCardTemplate">
+        <div class="card airbnb-card" style="width: 18rem; background-color: #121212;">
+          <img src="..." class="card-image card-img-top" alt="..">
+          <div class="card-body">
+              <div class="d-flex justify-content-between">
+                  <h5 class="card-title">card title placeholder</h5>
+                  <p class="card-price">price placeholder</p>
+              </div>
+              <p class="card-desc">desc placeholder</p>
+              <p class="card-location"><strong>location placeholder</strong></p>
+          </div>
+        </div>
+      </template>
+
 
     <div class="categories position-relative p-5">
         <h2>Explore all categories</h2>
@@ -111,42 +138,42 @@
 
             <div class="text-center">
                 <a href="#" class="category">
-                    <img src="./images/appliance_logo.png" alt="">
+                    <img src="./images/garden.png" alt="" class="w-75">
                 </a>
                 <h5>Home & Garden</h5>
             </div>
 
             <div class="text-center">
                 <a href="#" class="category">
-                    <img src="./images/appliance_logo.png" alt="">
+                    <img src="./images/baby.png" alt="" class="w-75">
                 </a>
                 <h5>Baby & Kids</h5>
             </div>
 
             <div class="text-center">
                 <a href="#" class="category">
-                    <img src="./images/appliance_logo.png" alt="">
+                    <img src="./images/women.png" alt="" class="w-75">
                 </a>
                 <h5>Women's Fashion</h5>
             </div>
 
             <div class="text-center">
                 <a href="#" class="category">
-                    <img src="./images/appliance_logo.png" alt="">
+                    <img src="./images/men.jpg" alt="">
                 </a>
                 <h5>Men's Fashion</h5>
             </div>
 
             <div class="text-center">
                 <a href="#" class="category">
-                    <img src="./images/appliance_logo.png" alt="">
+                    <img src="./images/health_beauty.jpg" alt="">
                 </a>
                 <h5>Health & Beauty</h5>
             </div>
 
             <div class="text-center">
                 <a href="#" class="category">
-                    <img src="./images/appliance_logo.png" alt="">
+                    <img src="./images/sports.png" alt="">
                 </a>
                 <h5>Sports & Outdoors</h5>
             </div>
