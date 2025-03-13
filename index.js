@@ -42,6 +42,9 @@ const s3 = new AWS.S3();
 // add user
 const addUser = async (user) => {
     // user.user_id = uuidv4(); // Generate a unique ID
+    console.log("inside add user")
+    console.log(user)
+    console.log(user.user_fname)
 
     const params = {
         TableName: "relocash_users",
@@ -52,14 +55,14 @@ const addUser = async (user) => {
             user_city: user.user_city,
             user_listings: user.user_listings || [],
             user_email: user.user_email,
-            user_phone: user.user_phone,
-            user_balance: user.user_balance
+            user_phone: user.user_phone
         }
     };
 
     try {
         await dynamoDB.put(params).promise();
         console.log("User added successfully");
+        return params.Item;
     } catch (error) {
         console.error("Error adding user:", error);
     }
@@ -143,11 +146,9 @@ async function deleteUserById(user_id) {
  */
 
 const addListing = async (listing, imageFile) => {
-    console.log("\n after upload image file --->>>  " + imageFile + "\n")
 
     const listing_id = uuidv4();
-
-    let imageUrl = listing.listing_photo; // Default to provided image URL
+    let imageUrl = null; // default image URL
 
     // If an image file is provided, upload to S3
     if (imageFile) {
@@ -158,6 +159,7 @@ const addListing = async (listing, imageFile) => {
             ContentType: imageFile.mimetype,
             // ACL: "public-read" // Allow public access
         };
+        console.log(s3Params)
 
         try {
             const uploadResult = await s3.upload(s3Params).promise();
@@ -168,7 +170,7 @@ const addListing = async (listing, imageFile) => {
         }
     }
 
-    console.log("\n after upload image file --->>>  " + imageFile + "\n")
+    // console.log("\n after upload image file --->>>  " + imageFile + "\n")
 
     const params = {
         TableName: "relocash_listings",
@@ -176,20 +178,26 @@ const addListing = async (listing, imageFile) => {
             listing_id,
             user_id: listing.user_id,
             listing_name: listing.listing_name,
-            listing_description: listing.description,
+            listing_description: listing.listing_description,
             listing_price: listing.listing_price,
             listing_category: listing.listing_category,
             listing_isFree: listing.listing_isFree,
             listing_photo: imageUrl,
-            listing_condition: listing.listing_condition
+            listing_condition: listing.listing_condition,
+            listing_isAvailable: true
         }
     };
 
+    // console.log(params.Item.listing_photo)
     try {
         await dynamoDB.put(params).promise();
-        console.log("Listing added successfully");
+        console.log("✅ Listing added successfully to DynamoDB:", params.Item);
+        return params.Item;
+
     } catch (error) {
         console.error("Error adding listing:", error);
+        throw new Error("Failed to add listing to database");
+
     }
 };
 
@@ -260,6 +268,27 @@ const getAllListingsByUserId = async (user_id) => {
 /**
  * register
  */
+app.post("/users", async (req, res) => {
+    try {
+        // Get user data from request body
+        const userData = req.body;
+
+        // Call addUser function
+        const newUser = await addUser(userData);
+
+        console.log(newUser)
+        // ✅ Send response
+        res.status(201).json({
+            message: "User added successfully",
+            user: newUser.user_id
+        });
+
+    } catch (error) {
+        console.error("❌ Error in POST /users:", error);
+        res.status(500).json({ error: error.message });
+    }
+})
+
 
 
 /**
@@ -291,16 +320,31 @@ app.get("/listings/user/:user_id", async (req, res) => {
  * posting a listing endpoint
  */
 app.post("/listings", upload.single("image"), async (req, res) => {
+    // console.log("In here post")
+    // console.log(req.body)
+    // console.log(req.file)
     try {
         const listingData = JSON.parse(req.body.listing); // Parse listing JSON
-        console.log(`listingData >>>>> ${listingData}`)
         const newListing = await addListing(listingData, req.file);
-        res.json(newListing);
+        // res.json(newListing);
+
+        return res.status(201).json({
+            message: "Listing created successfully",
+            listing: newListing
+        });
+
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
+
+// Start server
+app.listen(3000, () => console.log("Server running on port 3000"));
+
+
+
+/////////////////////////////////////////////
 
 // // Example usage:
 // addUser({
@@ -330,8 +374,3 @@ app.post("/listings", upload.single("image"), async (req, res) => {
 //     listing_photo: "https://www.edmunds.com/assets/m/honda/civic/2004/oem/2004_honda_civic_sedan_ex_fq_oem_1_500.jpg", // External image
 //     listing_condition: "Used - Like New"
 // }).then(response => console.log(response));
-
-
-// Start server
-app.listen(3000, () => console.log("Server running on port 3000"));
-
