@@ -12,11 +12,11 @@ const path = require("path");
 
 app.use(cors()); // Allow frontend requests
 // ✅ Serve static frontend files from "public" folder
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname)));
 
 // ✅ Route to serve `index.html` by default
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
+    res.sendFile(path.join(__dirname, "index.html"));
 });
 
 
