@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ReloCash</title>
+    <meta name="ReloCash template" content="ReloCash App">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap Library CSS CDN go here -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Boostrap Library JS CDN  go here -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <!-- Other libraries go here -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <!-- Google Icons (Material Design)-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Link to styles of your own -->
+    <link rel="stylesheet" href="./styles/style.css">
+
+</head>
+
+<body>
+    <!------------------------------>
+    <!-- Your HTML Layout go here -->
+    <!------------------------------>
+
+    <div id="navbar-container"></div>
+
+    <div class="container vh-100 d-flex align-items-center justify-content-center mt-4">
+        <div class="row shadow-lg rounded p-4 w-100" id="info-form">
+            <h2 class="text-center mb-4">Enter Information</h2>
+
+            <form action="" class="px-3" onsubmit="handleSubmit(event)">
+                <!-- Seller's Information -->
+                <div class="mb-4">
+                    <h4>Seller's Information</h4>
+                    <div class="mb-3">
+                        <label for="seller-address1" class="form-label">Address 1</label>
+                        <input type="text" class="form-control" id="seller-address1" name="seller-address1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="seller-address2" class="form-label">Address 2</label>
+                        <input type="text" class="form-control" id="seller-address2" name="seller-address2">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="seller-city" class="form-label">City</label>
+                            <input type="text" class="form-control" id="seller-city" name="seller-city" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="seller-province" class="form-label">Province</label>
+                            <input type="text" class="form-control" id="seller-province" name="seller-province"
+                                required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="seller-country" class="form-label">Country</label>
+                            <input type="text" class="form-control" id="seller-country" name="seller-country" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="seller-postal" class="form-label">Postal Code</label>
+                            <input type="text" class="form-control" id="seller-postal" name="seller-postal" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buyer's Information -->
+                <div class="mb-4">
+                    <h4>Buyer's Information</h4>
+                    <div class="mb-3">
+                        <label for="buyer-address1" class="form-label">Address 1</label>
+                        <input type="text" class="form-control" id="buyer-address1" name="buyer-address1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="buyer-address2" class="form-label">Address 2</label>
+                        <input type="text" class="form-control" id="buyer-address2" name="buyer-address2">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="buyer-city" class="form-label">City</label>
+                            <input type="text" class="form-control" id="buyer-city" name="buyer-city" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="buyer-province" class="form-label">Province</label>
+                            <input type="text" class="form-control" id="buyer-province" name="buyer-province" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="buyer-country" class="form-label">Country</label>
+                            <input type="text" class="form-control" id="buyer-country" name="seller-country" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="buyer-postal" class="form-label">Postal Code</label>
+                            <input type="text" class="form-control" id="buyer-postal" name="seller-postal" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <a href="user_profile.html"><button type="submit" class="btn btn-primary w-100">Submit</button></a> -->
+                <button type="submit" class="btn btn-primary w-100">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+
+    <!---------------------------------------------->
+    <!-- Your own JavaScript functions go here    -->
+    <!---------------------------------------------->
+    <!-- Link to scripts of your own -->
+    <!-- <script src="./scripts/script.js"></script> -->
+    <script src="nav.js"></script>
+    <script src="footer.js"></script>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Confirm submission
+            const confirmation = confirm('Are you sure you want to submit?');
+
+            // Redirect to user profile page if confirmed
+            if (confirmation) {
+                window.location.href = 'user_profile.html';
+            }
+        }
+    </script>
+
+</body>
+
+</html>

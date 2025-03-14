@@ -43,6 +43,15 @@ body {
     background-color: var(--tertiary-color);
 }
 
+.btn-ship-big {
+    color: white;
+    background-color: var(--secondary-color);
+}
+
+.btn-ship-big:hover {
+    background-color: var(--tertiary-color);
+}
+
 /* Cards */
 .card {
     overflow: hidden;
@@ -241,4 +250,9 @@ body {
 .about-image {
     max-width: 100%;
     height: auto;
+}
+
+.container {
+    padding: 80px 0 150px 0;
+    margin-bottom: 50px
 }
