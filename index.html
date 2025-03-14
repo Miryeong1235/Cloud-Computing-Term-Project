@@ -70,10 +70,10 @@
     </div>
 
 
-    <section class="p-5">
+    <!-- <section class="p-5">
         <h2>Recently listed items</h2>
         <div class="items-container d-flex gap-4 row row-cols-auto" id="items-container">
-            <!-- Items will be loaded here dynamically -->
+            
             <a href="item_page.html" class="text-decoration-none">
                 <div class="card" style="width: 18rem; background-color: #121212;">
                     <img src="./images/couch.jpg" class="card-img-top" alt="House">
@@ -103,22 +103,28 @@
             </a>
 
         </div>
-    </section>
-
+    </section> -->
+    <div class="p-5 mt-5">
+        <h1>Recently posted items</h1>
+        <div id="listings-go-here" class="row row-cols-auto justify-content-center">
+        </div>
+    </div>
     <!-- Templates for general use, not displayed -->
     <!-- Has a "card-image", "card-title", and "card-description" -->
     <template id="postCardTemplate">
-        <div class="card airbnb-card" style="width: 18rem; background-color: #121212;">
-            <img src="..." class="card-image card-img-top" alt="..">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <h5 class="card-title">card title placeholder</h5>
-                    <p class="card-price">price placeholder</p>
+        <a href="item_page.html" class="text-decoration-none">
+            <div class="card" style="width: 18rem; background-color: #121212;">
+                <img src="..." class="card-image card-img-top" alt="..">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title">card title placeholder</h5>
+                        <p class="card-price">price placeholder</p>
+                    </div>
+                    <p class="card-desc">desc placeholder</p>
+                    <p class="card-location"><strong>location placeholder</strong></p>
                 </div>
-                <p class="card-desc">desc placeholder</p>
-                <p class="card-location"><strong>location placeholder</strong></p>
             </div>
-        </div>
+        </a>
     </template>
 
 
@@ -242,6 +248,7 @@
     <!-- <script src="./scripts/script.js"></script> -->
     <script src="nav.js"></script>
     <script src="footer.js"></script>
+    <script src="scripts/all_listings.js"></script> <!-- Link to frontend JS -->
 
 
 </body>
