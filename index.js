@@ -9,20 +9,24 @@ require('dotenv').config();
 const cors = require("cors");
 const path = require("path");
 
-
 app.use(cors()); // Allow frontend requests
-// ✅ Serve static frontend files from "public" folder
-app.use(express.static(path.join(__dirname)));
-
-// ✅ Route to serve `index.html` by default
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
-});
-
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// ✅ Serve static frontend files from "public" folder
+// app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname, "public")));
+
+// ✅ Route to serve `index.html` by default
+app.get("/", (req, res) => {
+    // res.sendFile(path.join(__dirname, "index.html"));
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+app.get("/listings/:listing_id", (req, res) => {
+    // res.sendFile(path.join(__dirname, "item_page.html"))
+    res.sendFile(path.join(__dirname, "public", "item_page.html"))
+})
 
 
 // Configure AWS SDK (use IAM role in production, avoid hardcoding credentials)
@@ -217,7 +221,7 @@ const removeListing = async (listing_id) => {
 }
 
 const getAllListings = async () => {
-    console.log("here in get all listings")
+    // console.log("here in get all listings")
     const params = {
         TableName: "relocash_listings"
     }
@@ -228,7 +232,7 @@ const getAllListings = async () => {
             console.log("No listings found");
             return { message: "No listings found" };
         }
-        console.log("Listings retrieved:", data.Items);
+        // console.log("Listings retrieved:", data.Items);
         return data.Items;
     } catch (error) {
         console.error("Error retrieving listings:", error);
@@ -237,7 +241,7 @@ const getAllListings = async () => {
 }
 
 const getAllListingsByUserId = async (user_id) => {
-    console.log("get all listings by user ID")
+    // console.log("get all listings by user ID")
     const params = {
         TableName: "relocash_listings",
         IndexName: "user_id-index", // If using a Global Secondary Index (GSI) for user_id
@@ -262,6 +266,24 @@ const getAllListingsByUserId = async (user_id) => {
         return { error: error.message };
     }
 };
+
+const getListingById = async (listingId) => {
+    // console.log("in the listingbyid fucntion")
+    const params = {
+        TableName: "relocash_listings",
+        Key: {
+            listing_id: listingId
+        }
+    }
+    try {
+        const result = await dynamoDB.get(params).promise();
+        return result.Item || null;
+    } catch (error) {
+        console.error("Error fetching listing:", error);
+        throw new Error("Failed to retrieve listing.");
+    }
+
+}
 
 
 
@@ -316,6 +338,28 @@ app.get("/listings/user/:user_id", async (req, res) => {
     }
 });
 
+
+
+/**
+ * get a single listing by listing ID endpoint
+ */
+// app.get("/listings/:listing_id", async (req, res) => {
+app.get("/api/listings/:listing_id", async (req, res) => {
+    try {
+        const listingId = req.params.listing_id
+        const listing = await getListingById(listingId)
+
+        if (!listing) {
+            return res.status(404).json({ error: "Listing not found" });
+        }
+        // console.log(listing)
+        res.json(listing)
+    } catch (error) {
+        console.log("error nih")
+        res.status(500).json({ error: error.message });
+    }
+})
+
 /**
  * posting a listing endpoint
  */
@@ -338,6 +382,7 @@ app.post("/listings", upload.single("image"), async (req, res) => {
     }
 });
 
+app.use(express.static("public"));
 
 // Start server
 app.listen(3000, () => console.log("Server running on port 3000"));

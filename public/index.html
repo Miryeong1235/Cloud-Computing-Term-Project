@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ReloCash</title>
+    <meta name="ReloCash template" content="ReloCash App">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap Library CSS CDN go here -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Boostrap Library JS CDN  go here -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- Other libraries go here -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- Google Icons (Material Design)-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Two+Tone" rel="stylesheet">
+
+
+
+    <!-- Link to styles of your own -->
+    <link rel="stylesheet" href="./styles/style.css">
+
+</head>
+
+<body>
+
+    <!------------------------------>
+    <!-- Your HTML Layout go here -->
+    <!------------------------------>
+    <!-- Stuff for body goes here -->
+
+    <div id="navbar-container"></div>
+
+    <div class="position-relative vh-100 overflow-hidden">
+        <!-- Background Video -->
+        <video autoplay muted loop class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover">
+            <source src="./images/hero_section_bg.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Dark Overlay -->
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
+
+        <!-- Hero Content -->
+        <div class="container position-relative z-1 d-flex flex-column justify-content-center align-items-start h-100 text-white">
+            <h1 class="display-3 fw-bold">Welcome to ReloCash</h1>
+            <p class="lead w-50">
+                The Marketplace for Movers!
+            </p>
+            <button class="btn btn-login-big btn-lg fw-semibold d-flex align-items-center" onclick="window.location.href='sign_up.html'">
+                Login/Signup
+                <span class="ms-2">→</span>
+            </button>
+        </div>
+    </div>
+
+
+    <!-- <section class="p-5">
+        <h2>Recently listed items</h2>
+        <div class="items-container d-flex gap-4 row row-cols-auto" id="items-container">
+            
+            <a href="item_page.html" class="text-decoration-none">
+                <div class="card" style="width: 18rem; background-color: #121212;">
+                    <img src="./images/couch.jpg" class="card-img-top" alt="House">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">Couch</h5>
+                            <p class="card-price">Free</p>
+                        </div>
+                        <p class="card-desc">Great condition</p>
+                        <p class="card-location"><strong>Vancouver</strong></p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="item_page.html" class="text-decoration-none">
+                <div class="card" style="width: 18rem; background-color: #121212;">
+                    <img src="./images/couch2.jpg" class="card-img-top" alt="House">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">Couch</h5>
+                            <p class="card-price">Free</p>
+                        </div>
+                        <p class="card-desc">Great condition</p>
+                        <p class="card-location"><strong>Vancouver</strong></p>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </section> -->
+    <div class="p-5 mt-5">
+        <h1>Recently posted items</h1>
+        <div id="listings-go-here" class="row row-cols-auto justify-content-center">
+        </div>
+    </div>
+    <!-- Templates for general use, not displayed -->
+    <!-- Has a "card-image", "card-title", and "card-description" -->
+    <template id="postCardTemplate">
+        <!-- <a href="item_page.html" class="text-decoration-none"> -->
+        <div class="card" style="width: 18rem; background-color: #121212;">
+            <img src="..." class="card-image card-img-top" alt="..">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h5 class="card-title">card title placeholder</h5>
+                    <p class="card-price">price placeholder</p>
+                </div>
+                <p class="card-desc">desc placeholder</p>
+                <p class="card-location"><strong>location placeholder</strong></p>
+            </div>
+        </div>
+        </a>
+    </template>
+
+
+    <div class="categories position-relative p-5">
+        <h2>Explore all categories</h2>
+        <button class="scroll-btn left-btn" onclick="scrollL()">❮</button>
+
+        <div class="scroll-container d-flex">
+            <div class="text-center">
+                <a href="listing_page.html" class="category">
+                    <img src="./images/appliance_logo.png" alt="">
+                </a>
+                <h5>Electronics & Appliances</h5>
+            </div>
+
+            <div class="text-center">
+                <a href="listing_page.html" class="category">
+                    <img src="./images/furniture_logo.png" alt="">
+                </a>
+                <h5>Furniture</h5>
+            </div>
+
+            <div class="text-center">
+                <a href="listing_page.html" class="category">
+                    <img src="./images/garden.png" alt="" class="w-75">
+                </a>
+                <h5>Home & Garden</h5>
+            </div>
+
+            <div class="text-center">
+                <a href="listing_page.html" class="category">
+                    <img src="./images/baby.png" alt="" class="w-75">
+                </a>
+                <h5>Baby & Kids</h5>
+            </div>
+
+            <div class="text-center">
+                <a href="listing_page.html" class="category">
+                    <img src="./images/women.png" alt="" class="w-75">
+                </a>
+                <h5>Women's Fashion</h5>
+            </div>
+
+            <div class="text-center">
+                <a href="listing_page.html" class="category">
+                    <img src="./images/men.jpg" alt="">
+                </a>
+                <h5>Men's Fashion</h5>
+            </div>
+
+            <div class="text-center">
+                <a href="listing_page.html" class="category">
+                    <img src="./images/health_beauty.jpg" alt="">
+                </a>
+                <h5>Health & Beauty</h5>
+            </div>
+
+            <div class="text-center">
+                <a href="listing_page.html" class="category">
+                    <img src="./images/sports.png" alt="">
+                </a>
+                <h5>Sports & Outdoors</h5>
+            </div>
+
+            <div class="text-center">
+                <a href="listing_page.html" class="category">
+                    <img src="./images/game_boardgame.png" alt="" class="img-fluid">
+                </a>
+                <h5>Games & Hobbies</h5>
+            </div>
+
+            <div class="text-center">
+                <a href="listing_page.html" class="category">
+                    <img src="./images/book.png" alt="" class="w-50">
+                </a>
+                <h5>Books & Music</h5>
+            </div>
+
+            <div class="text-center">
+                <a href="listing_page.html" class="category">
+                    <img src="./images/pet.png" alt="" class="w-50">
+                </a>
+                <h5>Pet Supplies</h5>
+            </div>
+
+            <div class="text-center">
+                <a href="listing_page.html" class="category">
+                    <img src="./images/vehicles.png" alt="">
+                </a>
+                <h5>Vehicles & Parts</h5>
+            </div>
+
+            <div class="text-center">
+                <a href="listing_page.html" class="category">
+                    <img src="./images/box.png" alt="" class="w-50">
+                </a>
+                <h5>Others</h5>
+            </div>
+        </div>
+
+        <button class="scroll-btn right-btn" onclick="scrollRight()">❯</button>
+    </div>
+
+    <div id="footer-container"></div>
+
+    <!---------------------------------------------->
+    <!-- Your own JavaScript functions go here    -->
+    <!---------------------------------------------->
+
+    <script>
+        function scrollL() {
+            let container = document.querySelector('.scroll-container');
+            container.scrollTo({ left: container.scrollLeft - 200, behavior: 'smooth' });
+        }
+        function scrollRight() {
+            let container = document.querySelector('.scroll-container');
+            container.scrollTo({ left: container.scrollLeft + 200, behavior: 'smooth' });
+        }
+    </script>
+    <!-- Link to scripts of your own -->
+    <!-- <script src="./scripts/script.js"></script> -->
+    <script src="nav.js"></script>
+    <script src="footer.js"></script>
+    <script src="scripts/all_listings.js"></script> <!-- Link to frontend JS -->
+
+
+</body>
+
+</html>
