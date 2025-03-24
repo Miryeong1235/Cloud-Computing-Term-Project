@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
 
+    let listings = [];
     // logic here, if any
 
     try {
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 })
 
-function displayListingCard(listing) {
+export function displayListingCard(listing) {
     //clone the new card
     let newcard = document.getElementById("postCardTemplate").content.cloneNode(true);
     //populate with title, image
