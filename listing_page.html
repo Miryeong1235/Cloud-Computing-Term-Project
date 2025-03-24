@@ -42,7 +42,8 @@
     <!-- Search Bar Section -->
     <div class="p-5">
         <div class="d-flex align-items-center bg-dark p-2 rounded">
-            <button class="btn btn-login-big dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-login-big dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
                 <i class="bi bi-geo-alt"></i> Vancouver
             </button>
             <input class="form-control mx-2" type="text" placeholder="Search">
@@ -89,7 +90,8 @@
                 <h5>Category</h5>
                 <div class="list-group">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="category" id="electronics_appliances" checked>
+                        <input class="form-check-input" type="radio" name="category" id="electronics_appliances"
+                            checked>
                         <label class="form-check-label" for="electronics_appliances">Electronics & Appliances</label>
                     </div>
                     <div class="form-check">
@@ -145,43 +147,33 @@
 
             <!-- Listings -->
             <div class="col-md-9">
-                <h2>Buy and sell used sofa in Vancouver</h2>
+                <h2>All categories</h2>
                 <div class="items-container d-flex gap-4 row row-cols-auto" id="items-container">
                     <!-- Items will be loaded here dynamically -->
-                    <a href="item_page.html" class="text-decoration-none">
-                        <div class="card" style="width: 18rem; background-color: #121212;">
-                            <img src="./images/couch.jpg" class="card-img-top" alt="House">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="card-title">Couch</h5>
-                                    <p class="card-price">Free</p>
-                                </div>
-                                <p class="card-desc">Great condition</p>
-                                <p class="card-location"><strong>Vancouver</strong></p>
-                            </div>
-                        </div>
-                    </a>
-                    
-                    <a href="item_page.html" class="text-decoration-none">
-                        <div class="card" style="width: 18rem; background-color: #121212;">
-                            <img src="./images/couch2.jpg" class="card-img-top" alt="House">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="card-title">Couch</h5>
-                                    <p class="card-price">Free</p>
-                                </div>
-                                <p class="card-desc">Great condition</p>
-                                <p class="card-location"><strong>Vancouver</strong></p>
-                            </div>
-                        </div>
-                    </a>
-                            
+                    <div id="listings-go-here" class="row row-cols-auto justify-content-center"></div>
                 </div>
             </div>
+
+            <template id="postCardTemplate">
+                <a href="item_page.html" class="text-decoration-none">
+                    <div class="card" style="width: 18rem; background-color: #121212;">
+                        <img src="..." class="card-image card-img-top" alt="..">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="card-title">card title placeholder</h5>
+                                <p class="card-price">price placeholder</p>
+                            </div>
+                            <p class="card-desc">desc placeholder</p>
+                            <p class="card-location"><strong>location placeholder</strong></p>
+                        </div>
+                    </div>
+                </a>
+            </template>
+
         </div>
     </div>
     <!-- copyright footer -->
-    
+
 
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
@@ -189,6 +181,8 @@
     <!-- Link to scripts of your own -->
     <!-- <script src="./scripts/script.js"></script> -->
     <script src="nav.js"></script>
+    <script src="scripts/all_listings.js"></script>
+
 
 </body>
 
