@@ -90,8 +90,11 @@
                 <h5>Category</h5>
                 <div class="list-group">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="category" id="electronics_appliances"
-                            checked>
+                        <input class="form-check-input" type="radio" name="category" id="all_categories" checked>
+                        <label class="form-check-label" for="all_categories">All categories</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="category" id="electronics_appliances">
                         <label class="form-check-label" for="electronics_appliances">Electronics & Appliances</label>
                     </div>
                     <div class="form-check">
@@ -172,6 +175,8 @@
 
         </div>
     </div>
+
+    <div id="footer-container"></div>
     <!-- copyright footer -->
 
 
@@ -180,9 +185,10 @@
     <!---------------------------------------------->
     <!-- Link to scripts of your own -->
     <!-- <script src="./scripts/script.js"></script> -->
-    <script src="nav.js"></script>
-    <script src="scripts/all_listings.js"></script>
-    <script src="scripts/listing_page.js"></script>
+    <script src="scripts/nav.js"></script>
+    <script src="scripts/footer.js"></script>
+    <script type="module" src="scripts/all_listings.js"></script>
+    <script type="module" src="scripts/listing_page.js"></script>
 
 
 </body>
