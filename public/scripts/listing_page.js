@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function updateDisplayedListings() {
         const selectedId = document.querySelector('input[name="category"]:checked').id;
-        // const searchTerm = document.getElementById('search-bar').value.toLowerCase();
 
         const searchInput = document.getElementById('search-bar');
         const searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
@@ -69,9 +68,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         const listingsContainer = document.getElementById("listings-go-here");
         listingsContainer.innerHTML = ""; // Clear previous listings
 
-        filteredListings.forEach(listing => {
-            displayListingCard(listing);
-        });
+        if (filteredListings.length === 0) {
+            listingsContainer.innerHTML = "<p>No listings found</p>";
+        } else {
+            filteredListings.forEach(listing => {
+                displayListingCard(listing);
+            });
+        }
     }
 });
 
