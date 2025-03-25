@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return res.json().then(data => {
                     if (res.ok) {
                         localStorage.setItem("user_id", data.user_id);
+                        localStorage.setItem("user_location", data.user_location);
                         alert("✅ Registration successful!");
                         window.location.href = "index.html";
                     } else {

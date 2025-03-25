@@ -189,7 +189,7 @@ app.post('/register', (req, res) => {
             user_city: user_location,
         });
 
-        res.status(201).json({ message: "User registered successfully", user_id: newUser.user_id });
+        res.status(201).json({ message: "User registered successfully", user_id: newUser.user_id, user_location: newUser.user_city });
     });
 });
 
@@ -529,13 +529,9 @@ app.get("/api/listings/:listing_id", async (req, res) => {
  * posting a listing endpoint
  */
 app.post("/listings", upload.single("image"), async (req, res) => {
-    // console.log("In here post")
-    // console.log(req.body)
-    // console.log(req.file)
     try {
         const listingData = JSON.parse(req.body.listing); // Parse listing JSON
         const newListing = await addListing(listingData, req.file);
-        // res.json(newListing);
 
         return res.status(201).json({
             message: "Listing created successfully",
