@@ -39,12 +39,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         input.addEventListener('change', updateDisplayedListings);
     });
 
-    document.getElementById('search-bar').addEventListener('input', updateDisplayedListings);
+    document.getElementById('search-button').addEventListener('click', updateDisplayedListings);
 
 
     function updateDisplayedListings() {
         const selectedId = document.querySelector('input[name="category"]:checked').id;
-        const searchTerm = document.getElementById('search-bar').value.toLowerCase();
+        // const searchTerm = document.getElementById('search-bar').value.toLowerCase();
+
+        const searchInput = document.getElementById('search-bar');
+        const searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
 
         let filteredListings = categoryMap[selectedId] === "all_categories"
             ? listings // Show all listings
