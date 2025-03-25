@@ -63,45 +63,47 @@ document.addEventListener('DOMContentLoaded', () => {
         var user_email = document.getElementById('email').value;
         var user_phone = document.getElementById('phone').value;
         var user_city = document.getElementById('location').value;
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirm_password").value;
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        }
 
         // ✅ Create a JSON object instead of FormData
-        let userData = {
+        const userData = {
             user_fname,
             user_lname,
             user_email,
-            user_phone,
-            user_city
+            user_phone: "+1" + user_phone,
+            user_city,
+            password
         };
 
-        fetch("http://localhost:3000/users", {
+        // fetch("http://localhost:3000/users", {
+        fetch("/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json" // ✅ Set JSON content type
             },
             body: JSON.stringify(userData) // ✅ Send JSON data
         })
-            .then(response => {
-                console.log("Response received:", response);
 
-                if (!response.ok) {
-                    return response.json().then(err => { throw new Error(err.error || "Failed to create user."); });
-                }
-
-                return response.json();
-            })
-            .then(result => {
-                console.log("✅ New user created:", result);
-                alert("New user successfully created!");
-
-                // attach user_id in localStorage
-                localStorage.setItem("user_id", result.user);
-
-                // ✅ Redirect to the home page or user profile
-                window.location.href = "index.html";
+            .then(res => {
+                return res.json().then(data => {
+                    if (res.ok) {
+                        localStorage.setItem("user_id", data.user_id);
+                        alert("✅ Registration successful!");
+                        window.location.href = "index.html";
+                    } else {
+                        alert("❌ Error: " + data.error);
+                    }
+                });
             })
             .catch(error => {
-                console.error("❌ Error:", error);
-                alert("Error creating new user: " + error.message);
+                console.error("Error during signup:", error);
+                alert("An error occurred.");
             });
     });
 });

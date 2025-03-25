@@ -8,6 +8,9 @@ const upload = multer();
 require('dotenv').config();
 const cors = require("cors");
 const path = require("path");
+const session = require('express-session');
+const { Issuer, generators } = require('openid-client');
+const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 
 app.use(cors()); // Allow frontend requests
 app.use(express.json());
@@ -43,17 +46,166 @@ const dynamoDB = new AWS.DynamoDB.DocumentClient();
 const s3 = new AWS.S3();
 
 
+/**
+ * Amazon cognito setup
+ */
+
+let client;
+// Initialize OpenID Client
+async function initializeClient() {
+    const issuer = await Issuer.discover('https://cognito-idp.us-west-2.amazonaws.com/us-west-2_RLe1YK7Me');
+    client = new issuer.Client({
+        client_id: process.env.CLIENT_ID,
+        client_secret: process.env.CLIENT_SECRET,
+        redirect_uris: ['http://localhost:3000/callback'],
+        response_types: ['code']
+    });
+};
+initializeClient().catch(console.error);
+
+const checkAuth = (req, res, next) => {
+    if (!req.session.userInfo) {
+        req.isAuthenticated = false;
+    } else {
+        req.isAuthenticated = true;
+    }
+    next();
+};
+
+app.use(session({
+    secret: 'some secret',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.get('/', checkAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, "public", 'index.html'));
+});
+
+
+app.get('/login', (req, res) => {
+    const nonce = generators.nonce();
+    const state = generators.state();
+
+    req.session.nonce = nonce;
+    req.session.state = state;
+
+    const authUrl = client.authorizationUrl({
+        scope: 'phone openid email',
+        state: state,
+        nonce: nonce,
+    });
+
+    res.redirect(authUrl);
+});
+
+// Helper function to get the path from the URL. Example: "http://localhost/hello" returns "/hello"
+function getPathFromURL(urlString) {
+    try {
+        const url = new URL(urlString);
+        return url.pathname;
+    } catch (error) {
+        console.error('Invalid URL:', error);
+        return null;
+    }
+}
+
+app.get(getPathFromURL('http://localhost:3000/callback'), async (req, res) => {
+    try {
+        const params = client.callbackParams(req);
+        const tokenSet = await client.callback(
+            'http://localhost:3000/callback',
+            params,
+            {
+                nonce: req.session.nonce,
+                state: req.session.state
+            }
+        );
+
+        const userInfo = await client.userinfo(tokenSet.access_token);
+        req.session.userInfo = userInfo;
+
+        res.redirect('/');
+    } catch (err) {
+        console.error('Callback error:', err);
+        res.redirect('/');
+    }
+});
+
+// Logout route
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    const logoutUrl = `${process.env.USER_POOL_DOMAIN}/logout?client_id=vgpjgm260mmh3eb2pk73ht2qt&logout_uri=${process.env.LOGOUT_URI}`;
+    res.redirect(logoutUrl);
+});
+
+
+app.get('/check-session', (req, res) => {
+    console.log('Session Info:', req.session.userInfo); // Check session information
+    res.send('Check your console for session information');
+});
+
+
+// Create a Cognito User Pool instance
+const poolData = {
+    UserPoolId: process.env.USER_POOL_ID, // e.g. us-west-2_abc123
+    ClientId: process.env.CLIENT_ID        // from your Cognito app client
+};
+const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+
+// amazon cognito create user
+// Handle user registration
+app.post('/register', (req, res) => {
+    const { user_fname, user_lname, user_email, user_phone, user_location, password } = req.body;
+    console.log(req.body)
+
+    const attributeList = [
+        new AmazonCognitoIdentity.CognitoUserAttribute({ Name: "given_name", Value: user_fname }),
+        new AmazonCognitoIdentity.CognitoUserAttribute({ Name: "family_name", Value: user_lname }),
+        new AmazonCognitoIdentity.CognitoUserAttribute({ Name: "phone_number", Value: user_phone }),
+        // new AmazonCognitoIdentity.CognitoUserAttribute({ Name: "custom:location", Value: location }) // custom attribute in Cognito
+    ];
+
+    // console.log("Signup values:", { email, password, attributeList });
+
+    userPool.signUp(user_email, password, attributeList, null, async (err, result) => {
+        if (err) {
+            console.error("❌ Cognito signup error:", err);
+            return res.status(400).json({ error: err.message || "Signup failed" });
+        }
+
+        const cognitoUser = result.user;
+        const user_id = result.userSub;
+        console.log("✅ User registered in Cognito:", cognitoUser.getUsername());
+
+
+        // Also add user to DynamoDB for app use
+        const newUser = await addUser({
+            user_id,
+            user_fname,
+            user_lname,
+            user_email,
+            user_phone,
+            user_city: user_location,
+        });
+
+        res.status(201).json({ message: "User registered successfully", user_id: newUser.user_id });
+    });
+});
+
+
+////////////////////////////////
+
+
 // add user
 const addUser = async (user) => {
     // user.user_id = uuidv4(); // Generate a unique ID
-    console.log("inside add user")
-    console.log(user)
-    console.log(user.user_fname)
 
     const params = {
         TableName: "relocash_users",
         Item: {
-            user_id: uuidv4(),
+            // user_id: uuidv4(),
+            user_id: user.user_id,
             user_fname: user.user_fname,
             user_lname: user.user_lname,
             user_city: user.user_city,
