@@ -341,7 +341,8 @@ const addListing = async (listing, imageFile) => {
             listing_isFree: listing.listing_isFree,
             listing_photo: imageUrl,
             listing_condition: listing.listing_condition,
-            listing_isAvailable: true
+            listing_isAvailable: true,
+            listing_location: listing.listing_location
         }
     };
 

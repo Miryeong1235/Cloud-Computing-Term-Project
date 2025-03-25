@@ -55,7 +55,8 @@ document.addEventListener('DOMContentLoaded', function () {
             listing_price: listingPrice,
             listing_category: listingCategory,
             listing_isFree: listingIsFree,
-            listing_condition: listingCondition
+            listing_condition: listingCondition,
+            listing_location: localStorage.getItem("user_location")
         }));
 
         // for (let i = 0; i < listingPhoto.length; i++) {
