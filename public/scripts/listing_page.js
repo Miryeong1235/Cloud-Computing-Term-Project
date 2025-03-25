@@ -39,14 +39,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         input.addEventListener('change', updateDisplayedListings);
     });
 
+    document.getElementById('search-bar').addEventListener('input', updateDisplayedListings);
 
 
     function updateDisplayedListings() {
         const selectedId = document.querySelector('input[name="category"]:checked').id;
+        const searchTerm = document.getElementById('search-bar').value.toLowerCase();
 
-        const filteredListings = categoryMap[selectedId] === "all_categories"
+        let filteredListings = categoryMap[selectedId] === "all_categories"
             ? listings // Show all listings
             : listings.filter(item => item.listing_category === categoryMap[selectedId]);
+
+        if (searchTerm) {
+            filteredListings = filteredListings.filter(item =>
+                item.listing_name.toLowerCase().includes(searchTerm) ||
+                item.listing_description.toLowerCase().includes(searchTerm)
+            );
+        }
 
         console.log("Filtered Listings:", filteredListings);
         displayListings(filteredListings.slice(0, 12));
