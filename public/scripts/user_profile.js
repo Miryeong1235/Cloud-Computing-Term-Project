@@ -1,31 +1,56 @@
 document.addEventListener('DOMContentLoaded', async () => {
-
-    // logic here, if any
     const user_id = localStorage.getItem("user_id");
+    let listings = [];
 
     try {
-        // Fetch data from localhost
-        const response = await fetch(`http://localhost:3000/listings/user/${user_id}`);
-        if (!response.ok) throw new Error("Failed to fetch listing");
+        const listings_response = await fetch(`http://localhost:3000/listings/user/${user_id}`);
+        const user_response = await fetch(`http://localhost:3000/user/${user_id}`);
 
-        listings = await response.json();
-        listings.forEach(listing => {
-            displayListingCard(listing);
-        });
+        if (!listings_response.ok) throw new Error("Failed to fetch listing");
+        if (!user_response.ok) throw new Error("Failed to fetch user");
 
+        const user = await user_response.json();
+        document.querySelector('.user-name').textContent = `${user.user_fname} ${user.user_lname}`;
+        document.querySelector('.user-email').textContent = user.user_email;
+        document.querySelector('.user-location').textContent = user.user_city;
+
+        listings = await listings_response.json();
+        displayListings("All", listings);
     } catch (error) {
         console.error("❌ Error loading listing:", error);
     }
-})
+
+    document.querySelectorAll('.nav-link').forEach(tab => {
+        tab.addEventListener('click', (event) => {
+            event.preventDefault();
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            tab.classList.add('active');
+            displayListings(tab.textContent.trim(), listings);
+        });
+    });
+});
+
+function displayListings(filter, listings) {
+    const listingsContainer = document.getElementById("listings-go-here");
+    listingsContainer.innerHTML = "";
+    
+    listings.forEach(listing => {
+        if ((filter === "Available" && listing.listing_isAvailable) || 
+            (filter === "Sold" && !listing.listing_isAvailable) || 
+            (filter === "All")) {
+            displayListingCard(listing);
+        }
+    });
+}
 
 function displayListingCard(listing) {
-    //clone the new card
     let newcard = document.getElementById("postCardTemplate").content.cloneNode(true);
-    //populate with title, image
     newcard.querySelector('.card-image').src = listing.listing_photo;
-    newcard.querySelector('.card-title').innerHTML = listing.listing_name;
-    newcard.querySelector('.card-price').innerHTML = listing.listing_price;
-    newcard.querySelector('.card-desc').innerHTML = listing.listing_description;
-    //append to the posts
-    document.getElementById("listings-go-here").append(newcard);
+    newcard.querySelector('.card-title').textContent = listing.listing_name;
+    newcard.querySelector('.card-price').textContent = listing.listing_isFree ? "Free" : `$${listing.listing_price}`;
+    newcard.querySelector('.card-desc').textContent = listing.listing_description;
+    newcard.querySelector('.card-location').textContent = listing.listing_location;
+    newcard.querySelector('a[href="sell_form.html"]').href = `sell_form.html?listing_id=${listing.listing_id}`;
+    // newcard.querySelector('a[href="item_page.html"]').href = `item_page.html?listing_id=${listing.listing_id}`;
+    document.getElementById("listings-go-here").appendChild(newcard);
 }
