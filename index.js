@@ -237,7 +237,7 @@ const getUserById = async (user_id) => {
             console.log("User not found");
             return { message: "User not found" };
         }
-        console.log("User retrieved:", data.Item);
+        // console.log("User retrieved:", data.Item);
         return data.Item;
     } catch (error) {
         console.error("Error retrieving user:", error);
@@ -437,6 +437,19 @@ const getListingById = async (listingId) => {
 
 }
 
+/**
+ * get user by id listings endpoint
+ */
+app.get("/user/:user_id", async (req, res) => {
+    try {
+        const userId = req.params.user_id;
+        const user = await getUserById(userId);
+        // console.log(user)
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 
 /**

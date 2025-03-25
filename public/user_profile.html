@@ -39,16 +39,17 @@
 
     <div id="navbar-container"></div>
 
-    <header class="p-5 pb-2 mt-4 profile-header">
-        <div class="container text-center">
+    <header class="p-5 pb-2 mt-1 profile-header">
+        <div class="text-center mt-4">
             <img src="./images/default_avatar.jpg" alt="Profile Picture" class="profile-pic">
-            <h2>John Smith</h2>
-            <p>Vancouver</p>
+            <h2 class="user-name">User name placeholder</h2>
+            <p class="user-email">email placeholder</p>
+            <p class="user-location">Location placeholder</p>
             <button class="btn btn-login-big">Upload Picture</button>
         </div>
     </header>
 
-    <nav class="profile-nav p-5">
+    <nav class="profile-nav px-5">
         <ul class="nav nav-tabs justify-content-start">
             <li class="nav-item"><a class="nav-link active" href="#">Available</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Sold</a></li>
@@ -56,37 +57,27 @@
         </ul>
     </nav>
 
-    <main class="container">
-        <h2>Available items</h2>
-        <div class="items-container d-flex gap-4" id="items-container">
-            <!-- Items will be loaded here dynamically -->
-            <a href="item_page.html" class="text-decoration-none">
-                <div class="card" style="width: 18rem; background-color: #121212;">
-                    <img src="./images/couch.jpg" class="card-img-top" alt="House">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-title">Couch</h5>
-                            <p class="card-price">Free</p>
-                        </div>
-                        <p class="card-desc">Great condition</p>
-                        <p class="card-location"><strong>Vancouver</strong></p>
-                    </div>
-                </div>
-            </a>
+    <main class="px-5">
+        <h1>Items</h1>
+        <div id="listings-go-here" class="items-container d-flex gap-4">
+        </div>
 
+        <template id="postCardTemplate">
             <a href="item_page.html" class="text-decoration-none">
                 <div class="card" style="width: 18rem; background-color: #121212;">
-                    <img src="./images/couch2.jpg" class="card-img-top" alt="House">
+                    <img src="..." class="card-image card-img-top" alt="..">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
-                            <h5 class="card-title">Couch</h5>
-                            <p class="card-price">Free</p>
+                            <h5 class="card-title">card title placeholder</h5>
+                            <p class="card-price">price placeholder</p>
                         </div>
-                        <p class="card-desc">Great condition</p>
-                        <p class="card-location"><strong>Vancouver</strong></p>
+                        <p class="card-desc">desc placeholder</p>
+                        <p class="card-location"><strong>location placeholder</strong></p>
                     </div>
+                    <a href="sell_form.html"><button class="btn btn-login-big w-100">Sell item</button></a>
                 </div>
             </a>
+        </template>
     </main>
 
     <div id="footer-container"></div>
@@ -96,8 +87,9 @@
     <!---------------------------------------------->
     <!-- Link to scripts of your own -->
     <!-- <script src="./scripts/script.js"></script> -->
-    <script src="nav.js"></script>
-    <script src="footer.js"></script>
+    <script src="scripts/nav.js"></script>
+    <script src="scripts/footer.js"></script>
+    <script src="scripts/user_profile.js"></script> <!-- Link to frontend JS -->
 
 </body>
 

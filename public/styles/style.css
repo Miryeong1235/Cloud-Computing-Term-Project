@@ -52,9 +52,9 @@ body {
 .card img {
     max-width: 100%;
     /* Makes sure image does not exceed container width */
-    height: auto;
+    height: 200px;
     /* Keeps aspect ratio */
-    object-fit: contain;
+    object-fit: cover;
     transition: transform 0.2s ease-out;
     border-radius: 15px;
     /* Matches card's rounded corners */
