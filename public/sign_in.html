@@ -25,6 +25,12 @@
     <!-- Google Icons (Material Design)-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1048.0/aws-sdk.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@4.5.10/dist/amazon-cognito-identity.min.js"></script>
+
+    <!-- Your custom auth.js (with defer) -->
+    <script src="scripts/auth.js" defer></script>
+
     <!-- Link to styles of your own -->
     <link rel="stylesheet" href="./styles/style.css">
 
@@ -50,7 +56,7 @@
                 <p class="text-center">Don't have an account?
                     <a href="sign_up.html" class="text-primary">Sign in</a>
                 </p>
-                <form action="">
+                <form action="" id="signin-form">
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
