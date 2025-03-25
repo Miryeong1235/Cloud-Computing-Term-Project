@@ -137,6 +137,15 @@
                     <label for="listing-photo" class="form-label">Upload Photo</label>
                     <input type="file" class="form-control" id="listing-photo" name="listing-photo" accept="image/*" multiple required>
                 </div>
+                <!-- <div class="mb-3">
+                    <label for="listing-photo" class="form-label">Upload Photo</label>
+
+                    <div id="drop-zone" class="border border-secondary rounded p-4 text-center" style="cursor: pointer;">
+                        <p>📁 Drag & drop image here or click to browse</p>
+                        <input type="file" class="form-control" id="listing-photo" name="listing-photo" accept="image/*" hidden>
+                        <p id="file-name" class="text-muted mt-2"></p>
+                    </div>
+                </div> -->
 
                 <button type="submit" id="submit-form" class="btn btn-primary w-100">Add Item</button>
             </form>
@@ -150,8 +159,8 @@
     <!---------------------------------------------->
     <!-- Link to scripts of your own -->
     <!-- <script src="./scripts/script.js"></script> -->
-    <script src="nav.js"></script>
-    <script src="footer.js"></script>
+    <script src="scripts/nav.js"></script>
+    <script src="scripts/footer.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const priceInput = document.getElementById("listing-price");

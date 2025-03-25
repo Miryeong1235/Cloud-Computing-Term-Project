@@ -3,6 +3,34 @@ document.addEventListener('DOMContentLoaded', function () {
     const submitForm = document.getElementById('submit-form');
     // const listingForm = document.querySelector('form');
 
+    // const fileInput = document.getElementById("listing-photo");
+    // const dropArea = fileInput.closest(".mb-3");
+
+    // // Drag & drop visual cue
+    // ["dragenter", "dragover"].forEach(eventName => {
+    //     dropArea.addEventListener(eventName, (e) => {
+    //         e.preventDefault();
+    //         e.stopPropagation();
+    //         dropArea.classList.add("dragging");
+    //     });
+    // });
+
+    // ["dragleave", "drop"].forEach(eventName => {
+    //     dropArea.addEventListener(eventName, (e) => {
+    //         e.preventDefault();
+    //         e.stopPropagation();
+    //         dropArea.classList.remove("dragging");
+    //     });
+    // });
+
+    // // Handle dropped files
+    // dropArea.addEventListener("drop", (e) => {
+    //     const files = e.dataTransfer.files;
+    //     if (files.length) {
+    //         fileInput.files = files;
+    //     }
+    // });
+
     submitForm.addEventListener('click', async function (event) {
         event.preventDefault();
 
@@ -13,6 +41,9 @@ document.addEventListener('DOMContentLoaded', function () {
         var listingCategory = document.getElementById('listing-category').value;
         var listingCondition = document.getElementById('listing-condition').value;
         var listingPhoto = document.getElementById('listing-photo').files[0]; // this ensure to get the file not just the string path
+        // var listingPhoto = document.getElementById('listing-photo').files; // this ensure to get the file not just the string path
+        // console.log("listing photo --> " + listingPhoto)
+
 
 
         let formData = new FormData()
@@ -27,26 +58,8 @@ document.addEventListener('DOMContentLoaded', function () {
             listing_condition: listingCondition
         }));
 
-        // try {
-        // let response = await fetch("http://localhost:3000/listings", { // Replace with actual API URL if deployed
-        //     method: "POST",
-        //     body: formData // Send as multipart/form-data
-        // });
-
-        // console.log(response)
-        // if (response.ok) {
-        //     let result = await response.json();
-        //     alert("Listing successfully added!");
-        //     listingForm.reset(); // Clear form after submission
-        //     window.location.href("user_profile.html")
-        //     res
-        // } else {
-        //     throw new Error("Failed to create listing.");
-        // }
-
-        // } catch {
-        //     console.error("Error:", error);
-        //     alert("Error adding listing.");
+        // for (let i = 0; i < listingPhoto.length; i++) {
+        //     formData.append("listing_photo", listingPhoto[i]);
         // }
 
         fetch("http://localhost:3000/listings", {
@@ -76,6 +89,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
     })
+
+
 
 })
 
