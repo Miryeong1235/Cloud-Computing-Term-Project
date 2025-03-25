@@ -157,7 +157,8 @@ const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 // Handle user registration
 app.post('/register', (req, res) => {
     const { user_fname, user_lname, user_email, user_phone, user_location, password } = req.body;
-    console.log(req.body)
+    // console.log(req.body)
+    // console.log(user_location)
 
     const attributeList = [
         new AmazonCognitoIdentity.CognitoUserAttribute({ Name: "given_name", Value: user_fname }),
@@ -189,7 +190,7 @@ app.post('/register', (req, res) => {
             user_city: user_location,
         });
 
-        res.status(201).json({ message: "User registered successfully", user_id: newUser.user_id, user_location: newUser.user_city });
+        res.status(201).json({ message: "User registered successfully", user_id: newUser.user_id, user_location });
     });
 });
 

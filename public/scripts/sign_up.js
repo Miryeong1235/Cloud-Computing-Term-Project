@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var user_lname = document.getElementById('last_name').value;
         var user_email = document.getElementById('email').value;
         var user_phone = document.getElementById('phone').value;
-        var user_city = document.getElementById('location').value;
+        var user_location = document.getElementById('location').value;
         const password = document.getElementById("password").value;
         const confirmPassword = document.getElementById("confirm_password").value;
 
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
             user_lname,
             user_email,
             user_phone: "+1" + user_phone,
-            user_city,
+            user_location,
             password
         };
 
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return res.json().then(data => {
                     if (res.ok) {
                         localStorage.setItem("user_id", data.user_id);
-                        localStorage.setItem("user_location", data.user_location);
+                        localStorage.setItem("user_location", user_location);
                         alert("✅ Registration successful!");
                         window.location.href = "index.html";
                     } else {
