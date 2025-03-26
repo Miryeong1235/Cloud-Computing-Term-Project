@@ -10,23 +10,6 @@ document.getElementById("signin-form").addEventListener("submit", async (e) => {
         body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" }
     })
-        // .then(res => res.json())
-        // .then(data => {
-        //     console.log("data: message: " + JSON.stringify(data))
-        //     if (data.message === "NEW_PASSWORD_REQUIRED") {
-        //         localStorage.setItem("userEmail", email);
-        //         localStorage.setItem("userAttributes", JSON.stringify(data.userAttributes));
-        //         localStorage.setItem("sessionToken", data.session);
-        //         window.location.href = "reset_password.html";
-        //     } else {
-        //         alert("✅ Login successful!");
-        //         window.location.href = "/";
-        //     }
-        // })
-        // .catch(err => {
-        //     console.error("Login error:", err);
-        //     alert("Login failed");
-        // });
         .then(async res => {
             const data = await res.json();
 
@@ -43,6 +26,7 @@ document.getElementById("signin-form").addEventListener("submit", async (e) => {
                 localStorage.setItem("sessionToken", data.session);
                 window.location.href = "reset_password.html";
             } else {
+                localStorage.setItem("user_id", data.user_id);
                 alert("✅ Login successful!");
                 window.location.href = "/";
             }

@@ -225,13 +225,18 @@ app.post('/login', (req, res) => {
             // alert("✅ Login successful!");
             // window.location.href = "index.html";
 
-            const accessToken = result.getAccessToken().getJwtToken();
+            // const accessToken = result.getAccessToken().getJwtToken();
             const idToken = result.getIdToken().getJwtToken();
+
+            const payload = JSON.parse(
+                Buffer.from(idToken.split('.')[1], 'base64').toString('utf-8')
+            );
+
+            const userSub = payload.sub; // get the user sub which is the user_id
 
             res.status(200).json({
                 message: "LOGIN_SUCCESS",
-                accessToken,
-                idToken
+                user_id: userSub
             });
         },
         onFailure: (err) => {
