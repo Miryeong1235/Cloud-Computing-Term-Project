@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         "others": "Other",
     };
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryParam = urlParams.get("category") || "all_categories";
+
     try {
         const response = await fetch(`http://localhost:3000/listings`);
         if (!response.ok) throw new Error("Failed to fetch listing");
@@ -27,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         listings = await response.json();
         console.log("Listings:", listings);
         // displayListings(listings.slice(0, 12)); // Initially show first 12 listings
-        updateDisplayedListings();
+        updateDisplayedListings(categoryParam);
 
         // setupCategoryFilter(listings); // Set up category filter logic
 
@@ -42,8 +45,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('search-button').addEventListener('click', updateDisplayedListings);
 
 
-    function updateDisplayedListings() {
-        const selectedId = document.querySelector('input[name="category"]:checked').id;
+    function updateDisplayedListings(selectedId) {
+        // const selectedId = document.querySelector('input[name="category"]:checked').id;
 
         const searchInput = document.getElementById('search-bar');
         const searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
