@@ -89,54 +89,54 @@ app.get('/', checkAuth, (req, res) => {
 });
 
 
-app.get('/login', (req, res) => {
-    const nonce = generators.nonce();
-    const state = generators.state();
+// app.get('/login', (req, res) => {
+//     const nonce = generators.nonce();
+//     const state = generators.state();
 
-    req.session.nonce = nonce;
-    req.session.state = state;
+//     req.session.nonce = nonce;
+//     req.session.state = state;
 
-    const authUrl = client.authorizationUrl({
-        scope: 'phone openid email',
-        state: state,
-        nonce: nonce,
-    });
+//     const authUrl = client.authorizationUrl({
+//         scope: 'phone openid email',
+//         state: state,
+//         nonce: nonce,
+//     });
 
-    res.redirect(authUrl);
-});
+//     res.redirect(authUrl);
+// });
 
-// Helper function to get the path from the URL. Example: "http://localhost/hello" returns "/hello"
-function getPathFromURL(urlString) {
-    try {
-        const url = new URL(urlString);
-        return url.pathname;
-    } catch (error) {
-        console.error('Invalid URL:', error);
-        return null;
-    }
-}
+// // Helper function to get the path from the URL. Example: "http://localhost/hello" returns "/hello"
+// function getPathFromURL(urlString) {
+//     try {
+//         const url = new URL(urlString);
+//         return url.pathname;
+//     } catch (error) {
+//         console.error('Invalid URL:', error);
+//         return null;
+//     }
+// }
 
-app.get(getPathFromURL('http://localhost:3000/callback'), async (req, res) => {
-    try {
-        const params = client.callbackParams(req);
-        const tokenSet = await client.callback(
-            'http://localhost:3000/callback',
-            params,
-            {
-                nonce: req.session.nonce,
-                state: req.session.state
-            }
-        );
+// app.get(getPathFromURL('http://localhost:3000/callback'), async (req, res) => {
+//     try {
+//         const params = client.callbackParams(req);
+//         const tokenSet = await client.callback(
+//             'http://localhost:3000/callback',
+//             params,
+//             {
+//                 nonce: req.session.nonce,
+//                 state: req.session.state
+//             }
+//         );
 
-        const userInfo = await client.userinfo(tokenSet.access_token);
-        req.session.userInfo = userInfo;
+//         const userInfo = await client.userinfo(tokenSet.access_token);
+//         req.session.userInfo = userInfo;
 
-        res.redirect('/');
-    } catch (err) {
-        console.error('Callback error:', err);
-        res.redirect('/');
-    }
-});
+//         res.redirect('/');
+//     } catch (err) {
+//         console.error('Callback error:', err);
+//         res.redirect('/');
+//     }
+// });
 
 // Logout route
 app.get('/logout', (req, res) => {
@@ -206,7 +206,7 @@ app.post('/register', (req, res) => {
 });
 
 // amazon cognito login
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     const userData = {
@@ -221,7 +221,7 @@ app.post('/login', (req, res) => {
     });
 
     cognitoUser.authenticateUser(authDetails, {
-        onSuccess: (result) => {
+        onSuccess: async (result) => {
             // alert("✅ Login successful!");
             // window.location.href = "index.html";
 
@@ -234,10 +234,29 @@ app.post('/login', (req, res) => {
 
             const userSub = payload.sub; // get the user sub which is the user_id
 
-            res.status(200).json({
-                message: "LOGIN_SUCCESS",
-                user_id: userSub
-            });
+            try {
+                const userDetails = await getUserById(userSub); // ✅ Await the user
+
+                console.log("user details --->>  " + JSON.stringify(userDetails))
+
+                if (userDetails.error) {
+                    return res.status(500).json({ error: userDetails.error });
+                }
+
+                res.status(200).json({
+                    message: "LOGIN_SUCCESS",
+                    user_id: userSub,
+                    user_details: userDetails // ✅ Send user info to frontend
+                });
+            } catch (err) {
+                console.error("Failed to retrieve user:", err);
+                res.status(500).json({ error: "Failed to fetch user details" });
+            }
+
+            // res.status(200).json({
+            //     message: "LOGIN_SUCCESS",
+            //     user_id: userSub
+            // });
         },
         onFailure: (err) => {
             console.error('❌ Login failed:', err);

@@ -27,6 +27,8 @@ document.getElementById("signin-form").addEventListener("submit", async (e) => {
                 window.location.href = "reset_password.html";
             } else {
                 localStorage.setItem("user_id", data.user_id);
+                // console.log(data.user_details)
+                localStorage.setItem("user_location", data.user_details.user_city)
                 alert("✅ Login successful!");
                 window.location.href = "/";
             }
