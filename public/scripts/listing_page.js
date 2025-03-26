@@ -29,20 +29,34 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         listings = await response.json();
         console.log("Listings:", listings);
-        // displayListings(listings.slice(0, 12)); // Initially show first 12 listings
+
         updateDisplayedListings(categoryParam);
 
-        // setupCategoryFilter(listings); // Set up category filter logic
 
     } catch (error) {
         console.error("❌ Error loading listing:", error);
     }
 
     document.querySelectorAll('input[name="category"]').forEach(input => {
-        input.addEventListener('change', updateDisplayedListings);
+        input.addEventListener('change', () => {
+            updateDisplayedListings(input.id);
+            updateURL(input.id); // Update URL
+        });
     });
 
-    document.getElementById('search-button').addEventListener('click', updateDisplayedListings);
+    document.getElementById('search-button').addEventListener('click', () => {
+        const selectedCategory = document.querySelector('input[name="category"]:checked');
+        const categoryId = selectedCategory ? selectedCategory.id : "all_categories";
+        updateDisplayedListings(categoryId);
+        updateURL(categoryId); // Update URL
+    });
+
+    function updateURL(selectedId) {
+        const newURL = new URL(window.location);
+        newURL.searchParams.set("category", selectedId);
+        window.history.pushState({}, "", newURL); // URL を更新
+    }
+
 
 
     function updateDisplayedListings(selectedId) {
