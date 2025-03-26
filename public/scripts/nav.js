@@ -16,7 +16,7 @@ function updateNavbar() {
     const listingButton = document.querySelector(".btn-login[onclick*='add_item.html']");
     const loginButton = document.querySelector(".btn-login[onclick*='sign_up.html']");
     // const heroLoginBtn = document.getElementById("hero-login-btn");
-    
+
     // Create logout button
     const logoutButton = document.createElement("button");
     logoutButton.className = "btn btn-login";

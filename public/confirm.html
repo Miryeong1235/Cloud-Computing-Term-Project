@@ -2,17 +2,69 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Confirm Account</title>
-</head>
+    <title>ReloCash</title>
+    <meta name="ReloCash" content="ReloCash App">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap Library CSS CDN go here -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Boostrap Library JS CDN  go here -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <!-- Other libraries go here -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <!-- Google Icons (Material Design)-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Link to styles of your own -->
+    <link rel="stylesheet" href="./styles/style.css">
+
 
 <body>
-    <h2>Confirm Your Account</h2>
-    <input type="email" id="email" placeholder="Enter your email" required />
-    <input type="text" id="code" placeholder="Enter confirmation code" required />
-    <button onclick="confirmUser()">Confirm</button>
 
-    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6.3.12/dist/amazon-cognito-identity.min.js"></script>
+    <div class="container vh-100 d-flex align-items-center justify-content-center">
+        <div class="row shadow-lg rounded p-4 w-75" id="add-item-form">
+            <h2 class="text-center mb-4">Confirm Your Account</h2>
+            <form onsubmit="confirmUser(event)">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Enter your email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Your email address" required />
+                </div>
+                <div class="mb-3">
+                    <label for="code" class="form-label">Enter the confirmation code</label>
+                    <input type="text" class="form-control" id="code" placeholder="Confirmation code" required />
+                </div>
+                <div class="mb-3">
+                    <small class="form-text text-white">Please check your email for the confirmation code.</small>
+                </div>
+                <!-- <button class="btn btn-primary w-100" onclick="confirmUser()">Confirm</button> -->
+                <button type="button" class="btn btn-primary w-100" onclick="confirmUser(event)">Confirm</button>
+        </div>
+        </form>
+    </div>
+
+
+    <div id="footer-container"></div>
+
+    <!---------------------------------------------->
+    <!-- JavaScript functions go here    -->
+    <!---------------------------------------------->
+
+    <script src="scripts/footer.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6.3.12/dist/amazon-cognito-identity.min.js">
+    </script>
     <script>
         function confirmUser() {
             const email = document.getElementById("email").value;
