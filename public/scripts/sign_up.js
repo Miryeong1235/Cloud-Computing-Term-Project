@@ -41,8 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (res.ok) {
                         localStorage.setItem("user_id", data.user_id);
                         localStorage.setItem("user_location", user_location);
-                        alert("✅ Registration successful!");
-                        window.location.href = "index.html";
+                        // alert("✅ Registration successful!");
+                        // window.location.href = "index.html";
+                        alert("✅ Registration successful! Please check your email for the confirmation code.");
+
+                        // ✅ Redirect to the confirmation page
+                        window.location.href = data.redirectTo || "confirm.html";
                     } else {
                         alert("❌ Error: " + data.error);
                     }

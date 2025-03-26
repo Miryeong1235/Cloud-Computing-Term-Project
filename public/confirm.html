@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Account</title>
+</head>
+
+<body>
+    <h2>Confirm Your Account</h2>
+    <input type="email" id="email" placeholder="Enter your email" required />
+    <input type="text" id="code" placeholder="Enter confirmation code" required />
+    <button onclick="confirmUser()">Confirm</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6.3.12/dist/amazon-cognito-identity.min.js"></script>
+    <script>
+        function confirmUser() {
+            const email = document.getElementById("email").value;
+            const code = document.getElementById("code").value;
+
+            const poolData = {
+                UserPoolId: "us-west-2_RLe1YK7Me", // 🔁 Replace with your user pool ID
+                ClientId: "r04vvdnm1c5god3hak36d588c"         // 🔁 Replace with your client ID
+            };
+
+            const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+            const userData = {
+                Username: email,
+                Pool: userPool
+            };
+
+            const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+
+            cognitoUser.confirmRegistration(code, true, function (err, result) {
+                if (err) {
+                    alert("❌ Confirmation failed: " + err.message);
+                } else {
+                    alert("✅ Account confirmed! You can now log in.");
+                    window.location.href = "sign_in.html";
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

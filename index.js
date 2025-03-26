@@ -11,6 +11,7 @@ const path = require("path");
 const session = require('express-session');
 const { Issuer, generators } = require('openid-client');
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
+global.fetch = require('node-fetch'); // Required for cognito sdk in Node
 
 app.use(cors()); // Allow frontend requests
 app.use(express.json());
@@ -30,6 +31,11 @@ app.get("/listings/:listing_id", (req, res) => {
     // res.sendFile(path.join(__dirname, "item_page.html"))
     res.sendFile(path.join(__dirname, "public", "item_page.html"))
 })
+
+app.get('/signin', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'sign_in.html'));
+});
+
 
 
 // Configure AWS SDK (use IAM role in production, avoid hardcoding credentials)
@@ -154,7 +160,7 @@ const poolData = {
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
 // amazon cognito create user
-// Handle user registration
+// Handle user register
 app.post('/register', (req, res) => {
     const { user_fname, user_lname, user_email, user_phone, user_location, password } = req.body;
     // console.log(req.body)
@@ -190,9 +196,59 @@ app.post('/register', (req, res) => {
             user_city: user_location,
         });
 
-        res.status(201).json({ message: "User registered successfully", user_id: newUser.user_id, user_location });
+        res.status(201).json({
+            message: "User registered successfully. Please confirm your account via code.",
+            user_id: newUser.user_id,
+            user_location,
+            redirectTo: "/confirm.html"
+        });
     });
 });
+
+// amazon cognito login
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    const userData = {
+        Username: email,
+        Pool: userPool
+    };
+
+    const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+    const authDetails = new AmazonCognitoIdentity.AuthenticationDetails({
+        Username: email,
+        Password: password
+    });
+
+    cognitoUser.authenticateUser(authDetails, {
+        onSuccess: (result) => {
+            // alert("✅ Login successful!");
+            // window.location.href = "index.html";
+
+            const accessToken = result.getAccessToken().getJwtToken();
+            const idToken = result.getIdToken().getJwtToken();
+
+            res.status(200).json({
+                message: "LOGIN_SUCCESS",
+                accessToken,
+                idToken
+            });
+        },
+        onFailure: (err) => {
+            console.error('❌ Login failed:', err);
+            res.status(401).json({ error: err.message || 'Login failed' });
+        },
+        newPasswordRequired: function (userAttributes, requiredAttributes) {
+            console.log("⚠️ New password is required.");
+            return res.status(403).json({
+                message: "NEW_PASSWORD_REQUIRED",
+                userAttributes,
+                session: cognitoUser.Session
+            });
+        }
+    });
+});
+
 
 
 ////////////////////////////////
