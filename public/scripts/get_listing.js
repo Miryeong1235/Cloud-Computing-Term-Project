@@ -35,6 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img src="${listing.listing_photo}" class="d-block w-100" alt="${listing.listing_name}">
                 </div>
             `;
+
+            // Hide buttons if the logged-in user is the seller
+            const loggedInUserId = localStorage.getItem("user_id");
+            if (loggedInUserId === listing.user_id) {
+                document.querySelector(".message-btn").style.display = "none"; // Message Seller
+                document.querySelector(".buy-btn").style.display = "none"; // Buy Item
+            }
         })
         .catch(error => {
             console.error("❌ Error:", error);
