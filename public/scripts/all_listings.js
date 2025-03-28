@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     try {
         // Fetch data from localhost
-        const response = await fetch(`http://localhost:3000/listings`);
+        // const response = await fetch(`http://localhost:3000/listings`);
+        const response = await fetch(`http://35.90.254.135:3000/listings`);
         if (!response.ok) throw new Error("Failed to fetch listing");
 
         listings = await response.json();

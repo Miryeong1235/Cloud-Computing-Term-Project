@@ -638,20 +638,66 @@ app.get("/api/listings/:listing_id", async (req, res) => {
 /**
  * posting a listing endpoint
  */
-app.post("/listings", upload.single("image"), async (req, res) => {
+const multiUpload = upload.array("images");
+app.post("/listings", multiUpload, async (req, res) => {
+    console.log(`multi upload --<<>>> ${multiUpload}`)
     try {
-        const listingData = JSON.parse(req.body.listing); // Parse listing JSON
-        const newListing = await addListing(listingData, req.file);
+        const listingData = JSON.parse(req.body.listing);
+        const uploadedPhotos = [];
 
-        return res.status(201).json({
-            message: "Listing created successfully",
-            listing: newListing
-        });
+        for (const file of req.files) {
+            const listing_id = uuidv4(); // Or re-use one for all files
+            const s3Params = {
+                Bucket: "relocash-listings-images",
+                Key: `listings/${listing_id}_${file.originalname}`,
+                Body: file.buffer,
+                ContentType: file.mimetype
+            };
+
+            const uploadResult = await s3.upload(s3Params).promise();
+            uploadedPhotos.push(uploadResult.Location);
+        }
+
+        const params = {
+            TableName: "relocash_listings",
+            Item: {
+                listing_id: uuidv4(),
+                user_id: listingData.user_id,
+                listing_name: listingData.listing_name,
+                listing_description: listingData.listing_description,
+                listing_price: listingData.listing_price,
+                listing_category: listingData.listing_category,
+                listing_isFree: listingData.listing_isFree,
+                listing_photo: uploadedPhotos[0], // Primary image
+                listing_photos: uploadedPhotos,   // All images
+                listing_condition: listingData.listing_condition,
+                listing_isAvailable: true,
+                listing_location: listingData.listing_location
+            }
+        };
+
+        await dynamoDB.put(params).promise();
+        res.status(201).json({ message: "Listing created successfully", listing: params.Item });
 
     } catch (error) {
+        console.error("Upload error:", error);
         res.status(500).json({ error: error.message });
     }
 });
+// app.post("/listings", upload.single("image"), async (req, res) => {
+//     try {
+//         const listingData = JSON.parse(req.body.listing); // Parse listing JSON
+//         const newListing = await addListing(listingData, req.file);
+
+//         return res.status(201).json({
+//             message: "Listing created successfully",
+//             listing: newListing
+//         });
+
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// });
 
 /**
  * edit listing availability endpoint
