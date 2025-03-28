@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         console.log("Filtered Listings:", filteredListings);
-        displayListings(filteredListings.slice(0, 12));
+        displayListings(filteredListings);
     }
 
     // Function to display listings

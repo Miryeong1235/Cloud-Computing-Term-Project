@@ -45,7 +45,7 @@
 
             <form action="" class="px-3" onsubmit="handleSubmit(event)">
                 <!-- Seller's Information -->
-            
+
 
                 <!-- Buyer's Information -->
                 <div class="mb-4">
@@ -80,8 +80,11 @@
                     </div>
                 </div>
 
-                <!-- <a href="user_profile.html"><button type="submit" class="btn btn-primary w-100">Submit</button></a> -->
-                <button type="submit" class="btn btn-primary w-100">Submit</button>
+                <div class="d-flex justify-content-end">
+                    <!-- <a href="user_profile.html"><button type="submit" class="btn btn-primary w-100">Submit</button></a> -->
+                    <button type="button" class="btn btn-secondary mx-3" onclick="goBack()">Back</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
             </form>
         </div>
     </div>
@@ -107,6 +110,10 @@
             if (confirmation) {
                 window.location.href = 'user_profile.html';
             }
+        }
+
+        function goBack() {
+            window.history.back();
         }
     </script>
 
