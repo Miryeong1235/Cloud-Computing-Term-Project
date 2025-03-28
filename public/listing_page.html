@@ -65,23 +65,23 @@
                 <hr>
                 <h5>Location</h5>
                 <div class="list-group">
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="location" id="vancouver" checked>
                         <label class="form-check-label" for="vancouver">Vancouver</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="location" id="surrey">
                         <label class="form-check-label" for="surrey">Surrey</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="location" id="burnaby">
                         <label class="form-check-label" for="burnaby">Burnaby</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="location" id="richmond">
                         <label class="form-check-label" for="richmond">Richmond</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="location" id="coquitlam">
                         <label class="form-check-label" for="coquitlam">Coquitlam</label>
                     </div>
@@ -89,59 +89,59 @@
                 <hr>
                 <h5>Category</h5>
                 <div class="list-group">
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="category" id="all_categories" checked>
                         <label class="form-check-label" for="all_categories">All categories</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="category" id="electronics_appliances">
                         <label class="form-check-label" for="electronics_appliances">Electronics & Appliances</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="category" id="furniture">
                         <label class="form-check-label" for="furniture">Furniture</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="category" id="home_garden">
                         <label class="form-check-label" for="home_garden">Home & Garden</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="category" id="baby_kids">
                         <label class="form-check-label" for="baby_kids">Baby & Kids</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="category" id="women_fashion">
                         <label class="form-check-label" for="women_fashion">Women's Fashion</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="category" id="men_fashion">
                         <label class="form-check-label" for="men_fashion">Men's Fashion</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="category" id="health_beauty">
                         <label class="form-check-label" for="health_beauty">Health & Beauty</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="category" id="sports_outdoors">
                         <label class="form-check-label" for="sports_outdoors">Sports & Outdoors</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="category" id="games_hobbies">
                         <label class="form-check-label" for="games_hobbies">Games & Hobbies</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="category" id="books_music">
                         <label class="form-check-label" for="books_music">Books & Music</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="category" id="pet_supplies">
                         <label class="form-check-label" for="pet_supplies">Pet Supplies</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="category" id="vehicles_parts">
                         <label class="form-check-label" for="vehicles_parts">Vehicles & Parts</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="category" id="others">
                         <label class="form-check-label" for="others">Others</label>
                     </div>
@@ -150,27 +150,27 @@
 
             <!-- Listings -->
             <div class="col-md-9">
-                <h2>All categories</h2>
-                <div class="items-container d-flex gap-4 row row-cols-auto" id="items-container">
+                <h2>Search Results</h2>
+                <div class="items-container d-flex gap-4 row row-cols-auto mt-4" id="items-container">
                     <!-- Items will be loaded here dynamically -->
                     <div id="listings-go-here" class="row row-cols-auto justify-content-center"></div>
                 </div>
             </div>
 
             <template id="postCardTemplate">
-                <a href="item_page.html" class="text-decoration-none">
-                    <div class="card" style="width: 18rem; background-color: #121212;">
-                        <img src="..." class="card-image card-img-top" alt="..">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <h5 class="card-title">card title placeholder</h5>
-                                <p class="card-price">price placeholder</p>
-                            </div>
-                            <p class="card-desc">desc placeholder</p>
-                            <p class="card-location"><strong>location placeholder</strong></p>
+                <!-- <a href="item_page.html" class="text-decoration-none"> -->
+                <div class="card" style="width: 18rem; background-color: #121212;">
+                    <img src="..." class="card-image card-img-top" alt="..">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">card title placeholder</h5>
+                            <p class="card-price">price placeholder</p>
                         </div>
+                        <p class="card-desc">desc placeholder</p>
+                        <p class="card-location"><strong>location placeholder</strong></p>
                     </div>
-                </a>
+                </div>
+                <!-- </a> -->
             </template>
 
         </div>

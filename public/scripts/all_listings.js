@@ -26,6 +26,7 @@ export function displayListingCard(listing) {
     newcard.querySelector('.card-title').innerHTML = listing.listing_name;
     newcard.querySelector('.card-price').innerHTML = listing.listing_price;
     newcard.querySelector('.card-desc').innerHTML = listing.listing_description;
+    newcard.querySelector('.card-location').innerHTML = listing.listing_location;
 
     // ✅ Add data-id for identification
     let cardDiv = newcard.querySelector('.card');
