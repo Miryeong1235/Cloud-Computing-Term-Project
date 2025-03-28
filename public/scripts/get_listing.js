@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // console.log("in get listing")
     const pathSegments = window.location.pathname.split("/");
     const listingId = pathSegments[pathSegments.length - 1];
-    console.log("listing ID >>>>" + listingId)
 
 
     // fetch(`http://localhost:3000/listings/${listingId}`, {
@@ -10,9 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
         method: "GET",
     })
         .then(response => {
-            // console.log("Response received:", response);
-
-
             if (!response.ok) {
                 throw new Error("Failed to create listing.");
             }

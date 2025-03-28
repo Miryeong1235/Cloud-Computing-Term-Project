@@ -408,7 +408,7 @@ const addListing = async (listing, imageFile) => {
     }
 
     // console.log("\n after upload image file --->>>  " + imageFile + "\n")
-
+    // console.log("here is location -->>>  " + listing.listing_location)
     const params = {
         TableName: "relocash_listings",
         Item: {
@@ -487,13 +487,13 @@ const getAllListingsByUserId = async (user_id) => {
 
     try {
         const data = await dynamoDB.query(params).promise(); // Use query() instead of scan()
-        console.log(data)
+        // console.log(data)
         if (!data.Items || data.Items.length === 0) {
             console.log(`No listings found for user ${user_id}`);
             return { message: `No listings found for user ${user_id}` };
         }
 
-        console.log("User listings retrieved:", data.Items);
+        // console.log("User listings retrieved:", data.Items);
         return data.Items;
     } catch (error) {
         console.error("Error retrieving user listings:", error);
@@ -517,6 +517,34 @@ const getListingById = async (listingId) => {
         throw new Error("Failed to retrieve listing.");
     }
 
+}
+
+const soldListingById = async (listingId) => {
+    const listing = await getListingById(listingId)
+    if (!listing) {
+        throw new Error("Listing not found");
+    }
+
+    const newAvailability = !listing.listing_isAvailable;
+
+    const params = {
+        TableName: "relocash_listings",
+        Key: { listing_id: listingId },
+        UpdateExpression: "SET listing_isAvailable = :newVal",
+        ExpressionAttributeValues: {
+            ":newVal": newAvailability
+        },
+        ReturnValues: "UPDATED_NEW"
+    };
+
+    try {
+        const result = await dynamoDB.update(params).promise();
+        // console.log("Listing availability toggled:", result.Attributes);
+        return result.Attributes;
+    } catch (error) {
+        console.error("Error toggling listing availability:", error);
+        throw new Error("Failed to update listing availability.");
+    }
 }
 
 /**
@@ -620,6 +648,23 @@ app.post("/listings", upload.single("image"), async (req, res) => {
             listing: newListing
         });
 
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+/**
+ * edit listing availability endpoint
+ */
+app.patch("/listings/:listing_id/toggle-availability", async (req, res) => {
+    const listingId = req.params.listing_id;
+
+    try {
+        const updatedListing = await soldListingById(listingId);
+        res.json({
+            message: "Listing availability updated",
+            updated: updatedListing
+        });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

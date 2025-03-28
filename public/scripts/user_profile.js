@@ -23,11 +23,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     document.querySelectorAll('.prof-nav-link').forEach(tab => {
-        tab.addEventListener('click', (event) => {
+        tab.addEventListener('click', async (event) => {
             event.preventDefault();
             document.querySelectorAll('.prof-nav-link').forEach(link => link.classList.remove('active'));
             tab.classList.add('active');
-            displayListings(tab.textContent.trim(), listings, location);
+            // displayListings(tab.textContent.trim(), listings, location);
+            const filter = tab.textContent.trim();
+
+            try {
+                const listings_response = await fetch(`http://localhost:3000/listings/user/${localStorage.getItem("user_id")}`);
+                if (!listings_response.ok) throw new Error("Failed to refetch listings");
+                listings = await listings_response.json();
+                displayListings(filter, listings, location);
+            } catch (err) {
+                console.error("Error refreshing listings on tab click:", err);
+            }
         });
     });
 });
@@ -35,10 +45,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 function displayListings(filter, listings, location) {
     const listingsContainer = document.getElementById("listings-go-here");
     listingsContainer.innerHTML = "";
-    
+
     listings.forEach(listing => {
-        if ((filter === "Available" && listing.listing_isAvailable) || 
-            (filter === "Sold" && !listing.listing_isAvailable) || 
+        if ((filter === "Available" && listing.listing_isAvailable) ||
+            (filter === "Sold" && !listing.listing_isAvailable) ||
             (filter === "All")) {
             displayListingCard(listing, location);
         }
@@ -58,11 +68,44 @@ function displayListingCard(listing, location) {
     let cardDiv = newcard.querySelector('.card');
     cardDiv.setAttribute("data-id", listing.listing_id);
 
-    // ✅ Attach click event during creation
-    cardDiv.addEventListener("click", function () {
-        // console.log("inside here", listing.listing_id);
-        window.location.href = `/listings/${listing.listing_id}`; // ✅ Redirects to details page
+    // // ✅ Attach click event during creation
+    // cardDiv.addEventListener("click", function () {
+    //     // console.log("inside here", listing.listing_id);
+    //     window.location.href = `/listings/${listing.listing_id}`; // ✅ Redirects to details page
+    // });
+
+    // ✅ Handle click to go to item page
+    cardDiv.addEventListener("click", function (event) {
+        // Prevent redirect if button was clicked
+        if (event.target.classList.contains('mark-btn')) return;
+        window.location.href = `/listings/${listing.listing_id}`;
     });
-    
+
+    // ✅ Toggle availability logic
+    const toggleBtn = newcard.querySelector('.mark-btn');
+    toggleBtn.textContent = listing.listing_isAvailable ? "Mark as Sold" : "Mark as Available";
+    toggleBtn.addEventListener("click", async (e) => {
+        e.stopPropagation(); // prevent bubbling to card click
+
+        try {
+            const response = await fetch(`http://localhost:3000/listings/${listing.listing_id}/toggle-availability`, {
+                method: "PATCH"
+            });
+            console.log(response)
+
+            if (!response.ok) throw new Error("Failed to toggle listing");
+
+
+            const listings_response = await fetch(`http://localhost:3000/listings/user/${localStorage.getItem("user_id")}`);
+            const listings = await listings_response.json();
+
+            const activeFilter = document.querySelector('.prof-nav-link.active').textContent.trim();
+            displayListings(activeFilter, listings, location);
+        } catch (err) {
+            console.error("Toggle error:", err);
+            alert("❌ Failed to toggle listing status");
+        }
+    });
+
     document.getElementById("listings-go-here").appendChild(newcard);
 }

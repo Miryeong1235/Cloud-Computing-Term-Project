@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!response.ok) throw new Error("Failed to fetch listing");
 
         listings = await response.json();
-        console.log("Listings:", listings);
+        // console.log("Listings:", listings);
         // displayListings(listings.slice(0, 12)); // Initially show first 12 listings
         updateDisplayedListings();
 
