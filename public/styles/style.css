@@ -215,6 +215,29 @@ body {
     color: var(--primary-color);
 }
 
+/* Fixed container dimensions */
+.carousel-inner {
+    width: 600px;   /* Adjust as needed */
+    height: 400px;  /* Adjust as needed */
+    overflow: hidden; /* Hide overflow */
+}
+
+/* Ensure images fill the container without stretching */
+.carousel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Crop to fit while maintaining aspect ratio */
+}
+
+/* Optional: Center images horizontally/vertically */
+.carousel-img-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 /* About Section */
 .about-section {

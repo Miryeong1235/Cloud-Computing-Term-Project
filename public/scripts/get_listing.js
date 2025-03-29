@@ -14,11 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return response.json();
         })
         .then(listing => {
+            const currentCategoryBreadcrumb = document.getElementById("currentCategoryBreadcrumb");
+            currentCategoryBreadcrumb.textContent = listing.listing_category;
 
             // Update UI with listing data
             document.querySelector("h2").textContent = listing.listing_name;
             document.querySelector(".item-category").textContent = listing.listing_category;
-            document.querySelector("h3").textContent = `$${listing.listing_price}`;
+            // document.querySelector("h3").textContent = `$ ${listing.listing_price}`;
+            document.querySelector("h3").textContent = listing.listing_isFree ? "Free" : `$ ${listing.listing_price}`;
             document.querySelector("p:nth-of-type(2)").textContent = listing.listing_description;
             document.querySelector("strong + span").textContent = listing.listing_condition;
 
@@ -30,7 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
             //     </div>
             // `;
             // Update Image Carousel
-            const photos = listing.listing_photos || [listing.listing_photo];
+            // const photos = listing.listing_photos || [listing.listing_photo];
+            const photos = listing.listing_photos && listing.listing_photos.length > 0 
+                ? listing.listing_photos 
+                : [listing.listing_photo || '/images/no_image_uploaded.jpg']; // Fallback to listing_photo or default image
+
             const carouselInner = document.querySelector(".carousel-inner");
             const prevBtn = document.querySelector(".carousel-control-prev");
             const nextBtn = document.querySelector(".carousel-control-next");
@@ -40,11 +47,18 @@ document.addEventListener('DOMContentLoaded', () => {
             photos.forEach((photoUrl, index) => {
                 const item = document.createElement("div");
                 item.className = `carousel-item${index === 0 ? " active" : ""}`;
+
+                const imgContainer = document.createElement("div");
+                imgContainer.className = "carousel-img-container";
+
                 const img = document.createElement("img");
                 img.src = photoUrl;
                 img.alt = `${listing.listing_name} image ${index + 1}`;
-                img.className = "d-block w-100";
-                item.appendChild(img);
+                // img.className = "d-block w-100";
+                img.className = "carousel-img";
+
+                imgContainer.appendChild(img)
+                item.appendChild(imgContainer);
                 carouselInner.appendChild(item);
             });
 
