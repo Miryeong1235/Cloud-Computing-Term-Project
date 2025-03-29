@@ -84,8 +84,19 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!response.ok) throw new Error("Failed to add listing");
 
             const result = await response.json();
-            alert("✅ Listing added successfully!");
-            window.location.href = "user_profile.html";
+            // alert("✅ Listing added successfully!");
+            // window.location.href = "user_profile.html";
+            Swal.fire({
+                title: "Noice!",
+                text: "✅ Listing added successfully!",
+                imageUrl: "/images/noice.jpg",
+                imageWidth: 400,
+                imageHeight: 300,
+                imageAlt: "Custom image"
+            }).then(() => {
+                window.location.href = "user_profile.html";
+            })
+            
         } catch (error) {
             console.error("❌ Error:", error);
             alert("Failed to add listing.");
