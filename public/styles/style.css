@@ -217,7 +217,7 @@ body {
 
 /* Fixed container dimensions */
 .carousel-inner {
-    width: 600px;   /* Adjust as needed */
+    max-width: 600px;   /* Adjust as needed */
     height: 400px;  /* Adjust as needed */
     overflow: hidden; /* Hide overflow */
 }
@@ -275,4 +275,78 @@ body {
 footer {
     height: 80px; /* Adjust this value as needed */
     flex-shrink: 0; /* Prevents footer from shrinking if content is short */
+}
+
+/* buy form */
+/* Form Container */
+#info-form {
+    background-color: var(--background-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 800px;
+    color: white;
+}
+
+/* Headings */
+#info-form h2 {
+    color: var(--secondary-color);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+#info-form h4 {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--tertiary-color);
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+/* Form Inputs */
+#info-form .form-control {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+#info-form .form-control:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(101, 184, 145, 0.25);
+    color: white;
+}
+
+#info-form .form-label {
+    color: var(--secondary-color);
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.btn-secondary {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    #info-form {
+        padding: 20px !important;
+    }
+    
+    .d-flex.justify-content-end {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .mx-3 {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
 }
