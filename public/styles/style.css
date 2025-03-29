@@ -270,3 +270,9 @@ body {
     max-width: 100%;
     height: auto;
 }
+
+/* footer */
+footer {
+    height: 80px; /* Adjust this value as needed */
+    flex-shrink: 0; /* Prevents footer from shrinking if content is short */
+}

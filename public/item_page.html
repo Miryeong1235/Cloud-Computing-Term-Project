@@ -31,67 +31,71 @@
 
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <!------------------------------>
     <!-- Your HTML Layout go here -->
     <!------------------------------>
 
     <div id="navbar-container"></div>
+    
+    <main class="flex-grow-1">
 
-    <div class="container mt-large">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#" class="text-white-50">Home</a></li>
-                <li class="breadcrumb-item"><a href="#" class="text-white-50">Categories</a></li>
-                <li id="currentCategoryBreadcrumb" class="breadcrumb-item active text-white" aria-current="page">Category placeholder</li>
-            </ol>
-        </nav>
-
-        <div class="row">
-            <div class="col-md-6">
-                <!-- <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="/images/couch.jpg" class="d-block w-100" alt="Camera">
+        <div class="container mt-large">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#" class="text-white-50">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#" class="text-white-50">Categories</a></li>
+                    <li id="currentCategoryBreadcrumb" class="breadcrumb-item active text-white" aria-current="page">Category placeholder</li>
+                </ol>
+            </nav>
+    
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="/images/couch.jpg" class="d-block w-100" alt="Camera">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="/images/couch2.jpg" class="d-block w-100" alt="Camera">
+                            </div>
                         </div>
-                        <div class="carousel-item">
-                            <img src="/images/couch2.jpg" class="d-block w-100" alt="Camera">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </button>
+                    </div> -->
+                    <!-- make carousel if multiple images is stored -->
+                    <div id="carousel-listing" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <!-- JS will inject .carousel-item elements here -->
                         </div>
+    
+                        <!-- Navigation Buttons -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-listing" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carousel-listing" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    </button>
-                </div> -->
-                <!-- make carousel if multiple images is stored -->
-                <div id="carousel-listing" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <!-- JS will inject .carousel-item elements here -->
-                    </div>
-
-                    <!-- Navigation Buttons -->
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-listing" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon"></span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-listing" data-bs-slide="next">
-                        <span class="carousel-control-next-icon"></span>
-                    </button>
+                </div>
+                <div class="col-md-6">
+                    <h2>Name placeholder</h2>
+                    <p><a href="#" class="item-category">Electronics & Appliances</a></p>
+                    <h3>$30</h3>
+                    <p>$30 each or both for $50<br>Brand new, unopened</p>
+                    <p><strong>Condition</strong> <span class="text-success">New</span></p>
+                    <!-- <p>2 chats • 5 favourites • 108 views</p> -->
+                    <button class="btn btn-login-big w-100 mt-3 message-btn">Message seller</button>
+                    <a href="/buy_form.html"><button class="btn btn-login-big w-100 mt-2 buy-btn">Buy item</button></a>
                 </div>
             </div>
-            <div class="col-md-6">
-                <h2>Name placeholder</h2>
-                <p><a href="#" class="item-category">Electronics & Appliances</a></p>
-                <h3>$30</h3>
-                <p>$30 each or both for $50<br>Brand new, unopened</p>
-                <p><strong>Condition</strong> <span class="text-success">New</span></p>
-                <!-- <p>2 chats • 5 favourites • 108 views</p> -->
-                <button class="btn btn-login-big w-100 mt-3 message-btn">Message seller</button>
-                <a href="/buy_form.html"><button class="btn btn-login-big w-100 mt-2 buy-btn">Buy item</button></a>
-            </div>
         </div>
-    </div>
+    </main>
+
 
     <div id="footer-container"></div>
 
