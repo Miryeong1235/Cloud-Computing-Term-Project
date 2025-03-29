@@ -49,6 +49,9 @@
             <input class="form-control mx-2" type="text" placeholder="Search" id="search-bar">
             <button class="btn btn-login" id="search-button">&#x1F50D;</button>
         </div>
+        <div class="d-flex">
+            <button class="btn btn-secondary mt-2 ms-2" id="clear-search-button">Clear Search</button>
+        </div>
     </div>
 
     <div class="container-fluid p-5">
@@ -157,12 +160,11 @@
                 <h2>Search Results</h2>
                 <div class="items-container d-flex gap-4 row row-cols-auto mt-4" id="items-container">
                     <!-- Items will be loaded here dynamically -->
-                    <div id="listings-go-here" class="row row-cols-auto justify-content-center"></div>
+                    <div id="listings-go-here" class="row row-cols-auto justify-content-start gap-3"></div>
                 </div>
             </div>
 
-            <template id="postCardTemplate">
-                <!-- <a href="item_page.html" class="text-decoration-none"> -->
+            <!-- <template id="postCardTemplate">
                 <div class="card" style="width: 18rem; background-color: #121212;">
                     <img src="..." class="card-image card-img-top" alt="..">
                     <div class="card-body">
@@ -171,6 +173,25 @@
                             <p class="card-price">price placeholder</p>
                         </div>
                         <p class="card-desc">desc placeholder</p>
+                        <p class="card-location"><strong>location placeholder</strong></p>
+                    </div>
+                </div>
+            </template> -->
+            <template id="postCardTemplate">
+                <!-- <a href="item_page.html" class="text-decoration-none"> -->
+                <div class="card" style="width: 18rem; background-color: #121212;">
+                    <img src="/images/no_image_uploaded.jpg" class="card-image card-img-top" alt="..">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">card title placeholder</h5>
+                            <p class="card-price">price placeholder</p>
+                        </div>
+                        <p class="card-desc">desc placeholder</p>
+                    </div>
+                    <div class="card-seller-container px-3">
+                        <p class="card-seller">Seller placeholder</p>
+                    </div>
+                    <div class="card-footer text-muted">
                         <p class="card-location"><strong>location placeholder</strong></p>
                     </div>
                 </div>

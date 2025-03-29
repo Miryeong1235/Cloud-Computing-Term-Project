@@ -24,14 +24,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const categoryParam = urlParams.get("category") || "all_categories";
 
     try {
-        // const response = await fetch(`http://localhost:3000/listings`);
-        const response = await fetch(`http://35.90.254.135:3000/listings`);
+        const response = await fetch(`http://localhost:3000/listings`);
+        // const response = await fetch(`http://35.90.254.135:3000/listings`);
         if (!response.ok) throw new Error("Failed to fetch listing");
 
         listings = await response.json();
         console.log("Listings:", listings);
 
-        updateDisplayedListings(categoryParam);
+        // updateDisplayedListings(categoryParam);
 
 
     } catch (error) {
@@ -56,6 +56,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         const selectedCategory = document.querySelector('input[name="category"]:checked');
         const categoryId = selectedCategory ? selectedCategory.id : "all_categories";
         updateDisplayedListings(categoryId); // Reapply the filter with category
+    });
+
+    document.getElementById('clear-search-button').addEventListener('click', () => {
+        document.getElementById('search-bar').value = ""; // Clear search input
+        updateURL("all_categories"); // Reset category in the URL
+        updateDisplayedListings("all_categories"); // Show all listings
     });
 
     function updateURL(selectedId) {
@@ -101,8 +107,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (filteredListings.length === 0) {
             listingsContainer.innerHTML = "<p>No listings found</p>";
         } else {
-            filteredListings.forEach(listing => {
-                displayListingCard(listing);
+            const currentUserId = localStorage.getItem("user_id");
+            filteredListings.forEach(async listing => {
+                try {
+                    const user_response = await fetch(`http://localhost:3000/user/${listing.user_id}`);
+                    if (!user_response.ok) throw new Error("Failed to fetch user");
+
+                    const user = await user_response.json();
+                    const seller = `${user.user_fname} ${user.user_lname}`;
+                    if ((!currentUserId || currentUserId !== user.user_id) &&
+                         listing.listing_isAvailable === true) {
+                        displayListingCard(listing, seller);
+                    }
+                } catch (error) {
+                    console.error("❌ Error fetching user data:", error);
+                }
             });
         }
     }

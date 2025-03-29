@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const pathSegments = window.location.pathname.split("/");
     const listingId = pathSegments[pathSegments.length - 1];
 
-    // fetch(`http://localhost:3000/api/listings/${listingId}`, {
-    fetch(`http://35.90.254.135:3000/api/listings/${listingId}`, {
+    fetch(`http://localhost:3000/api/listings/${listingId}`, {
+    // fetch(`http://35.90.254.135:3000/api/listings/${listingId}`, {
         method: "GET",
     })
         .then(response => {

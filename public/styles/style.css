@@ -71,8 +71,13 @@ body {
 }
 
 .card-title,
-.card-desc {
+.card-seller {
     font-size: 1.1rem;
+    color: white;
+}
+
+.card-desc {
+    font-size: .8rem;
     color: white;
 }
 

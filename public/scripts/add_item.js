@@ -75,8 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         try {
-            // const response = await fetch("http://localhost:3000/listings", {
-            const response = await fetch("http://35.90.254.135:3000/listings", {
+            const response = await fetch("http://localhost:3000/listings", {
+            // const response = await fetch("http://35.90.254.135:3000/listings", {
                 method: "POST",
                 body: formData
             });
