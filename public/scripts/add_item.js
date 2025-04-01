@@ -75,8 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         try {
-            const response = await fetch("http://localhost:3000/listings", {
-            // const response = await fetch("http://35.90.254.135:3000/listings", {
+            // const response = await fetch("http://localhost:3000/listings", {
+            const response = await fetch("http://34.218.51.211:3000/listings", {
                 method: "POST",
                 body: formData
             });
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }).then(() => {
                 window.location.href = "user_profile.html";
             })
-            
+
         } catch (error) {
             console.error("❌ Error:", error);
             alert("Failed to add listing.");

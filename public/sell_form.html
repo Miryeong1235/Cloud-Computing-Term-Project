@@ -15,14 +15,12 @@
 
     <!-- Boostrap Library JS CDN  go here -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
     <!-- Other libraries go here -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <!-- Google Icons (Material Design)-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -65,8 +63,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="seller-province" class="form-label">Province</label>
-                            <input type="text" class="form-control" id="seller-province" name="seller-province"
-                                required>
+                            <input type="text" class="form-control" id="seller-province" name="seller-province" required>
                         </div>
                     </div>
                     <div class="row">
@@ -147,12 +144,12 @@
                 const listingParam = urlParams.get("listing_id");
 
                 try {
-                    const response = await fetch(`http://localhost:3000/listings/${listingParam}/toggle-availability`, {
-                    // const response = await fetch(`http://35.90.254.135:3000/listings/${listing.listing_id}/toggle-availability`, {
+                    // const response = await fetch(`http://localhost:3000/listings/${listingParam}/toggle-availability`, {
+                    const response = await fetch(`http://34.218.51.211:3000/listings/${listing.listing_id}/toggle-availability`, {
                         method: "PATCH"
                     });
                     console.log(response)
-                
+
                     if (!response.ok) throw new Error("Failed to toggle listing");
                 } catch (err) {
                     console.error("Toggle error:", err);

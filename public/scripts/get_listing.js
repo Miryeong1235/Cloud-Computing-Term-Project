@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const pathSegments = window.location.pathname.split("/");
     const listingId = pathSegments[pathSegments.length - 1];
 
-    fetch(`http://localhost:3000/api/listings/${listingId}`, {
-        // fetch(`http://35.90.254.135:3000/api/listings/${listingId}`, {
+    // fetch(`http://localhost:3000/api/listings/${listingId}`, {
+    fetch(`http://34.218.51.211:3000/api/listings/${listingId}`, {
         method: "GET",
     })
         .then(response => {
@@ -80,8 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelector(".message-btn").style.display = "none"; // Message Seller
                 document.querySelector(".buy-btn").style.display = "none"; // Buy Item
             } else {
-                fetch(`http://localhost:3000/user/${listing.user_id}`, {
-                    // fetch(`http://35.90.254.135:3000/api/listings/${listingId}`, {
+                // fetch(`http://localhost:3000/user/${listing.user_id}`, {
+                fetch(`http://34.218.51.211:3000/api/listings/${listingId}`, {
                     method: "GET",
                 })
                     .then(response => {

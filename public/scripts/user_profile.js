@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     let location = "";
 
     try {
-        const listings_response = await fetch(`http://localhost:3000/listings/user/${user_id}`);
-        // const listings_response = await fetch(`http://35.90.254.135:3000/listings/user/${user_id}`);
-        const user_response = await fetch(`http://localhost:3000/user/${user_id}`);
-        // const user_response = await fetch(`http://35.90.254.135:3000/user/${user_id}`);
+        // const listings_response = await fetch(`http://localhost:3000/listings/user/${user_id}`);
+        const listings_response = await fetch(`http://34.218.51.211:3000/listings/user/${user_id}`);
+        // const user_response = await fetch(`http://localhost:3000/user/${user_id}`);
+        const user_response = await fetch(`http://34.218.51.211:3000/user/${user_id}`);
 
         if (!listings_response.ok) throw new Error("Failed to fetch listing");
         if (!user_response.ok) throw new Error("Failed to fetch user");
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             try {
                 const listings_response = await fetch(`http://localhost:3000/listings/user/${localStorage.getItem("user_id")}`);
-                // const listings_response = await fetch(`http://35.90.254.135:3000/listings/user/${localStorage.getItem("user_id")}`);
+                // const listings_response = await fetch(`http://34.218.51.211:3000/listings/user/${localStorage.getItem("user_id")}`);
                 if (!listings_response.ok) throw new Error("Failed to refetch listings");
                 listings = await listings_response.json();
                 displayListings(filter, listings, location);
@@ -61,7 +61,7 @@ function displayListings(filter, listings, location) {
 function displayListingCard(listing, location) {
     let newcard = document.getElementById("postCardTemplate").content.cloneNode(true);
     // newcard.querySelector('.card-image').src = listing.listing_photo;
-    if(listing.listing_photo) {
+    if (listing.listing_photo) {
         newcard.querySelector('.card-image').src = listing.listing_photo;
     }
     newcard.querySelector('.card-title').textContent = listing.listing_name;
@@ -100,8 +100,8 @@ function displayListingCard(listing, location) {
         e.stopPropagation(); // prevent bubbling to card click
 
         try {
-            const response = await fetch(`http://localhost:3000/listings/${listing.listing_id}/toggle-availability`, {
-            // const response = await fetch(`http://35.90.254.135:3000/listings/${listing.listing_id}/toggle-availability`, {
+            // const response = await fetch(`http://localhost:3000/listings/${listing.listing_id}/toggle-availability`, {
+            const response = await fetch(`http://34.218.51.211:3000/listings/${listing.listing_id}/toggle-availability`, {
                 method: "PATCH"
             });
             console.log(response)
@@ -109,8 +109,8 @@ function displayListingCard(listing, location) {
             if (!response.ok) throw new Error("Failed to toggle listing");
 
 
-            const listings_response = await fetch(`http://localhost:3000/listings/user/${localStorage.getItem("user_id")}`);
-            // const listings_response = await fetch(`http://35.90.254.135:3000/listings/user/${localStorage.getItem("user_id")}`);
+            // const listings_response = await fetch(`http://localhost:3000/listings/user/${localStorage.getItem("user_id")}`);
+            const listings_response = await fetch(`http://34.218.51.211:3000/listings/user/${localStorage.getItem("user_id")}`);
             const listings = await listings_response.json();
 
             const activeFilter = document.querySelector('.prof-nav-link.active').textContent.trim();

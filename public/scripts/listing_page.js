@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const radioButton = document.getElementById(categoryParam);
 
     try {
-        const response = await fetch(`http://localhost:3000/listings`);
-        // const response = await fetch(`http://35.90.254.135:3000/listings`);
+        // const response = await fetch(`http://localhost:3000/listings`);
+        const response = await fetch(`http://34.218.51.211:3000/listings`);
         if (!response.ok) throw new Error("Failed to fetch listing");
 
         listings = await response.json();
