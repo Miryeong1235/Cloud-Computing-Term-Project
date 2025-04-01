@@ -711,15 +711,34 @@ const os = require("os");
 //     fs.mkdirSync(uploadDir, { recursive: true });
 // }
 // Path to EFS-mounted upload directory
-const uploadDir = "/home/ec2-user/efs/uploads";
+// const uploadDir = "/home/ec2-user/efs/uploads";
 
-// Make the EFS upload directory if not exists
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
+
+// // Make the EFS upload directory if not exists
+// if (!fs.existsSync(uploadDir)) {
+//     fs.mkdirSync(uploadDir, { recursive: true });
+// }
+
+const isEC2 = process.env.RUNNING_ON_EC2 === "true";
+
+const uploadDir = isEC2
+    ? "/home/ec2-user/efs/uploads"
+    : path.join(__dirname, "uploads");
+
+// Safely create the directory
+try {
+    if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+        console.log(`✅ Created upload dir: ${uploadDir}`);
+    }
+} catch (err) {
+    console.error("❌ Failed to create upload directory:", err.message);
 }
 
 // Serve static files from the upload directory
 app.use('/uploads', express.static(uploadDir));
+
+
 
 // Update multer to store in memory (no disk usage before saving to EFS)
 const storage = multer.memoryStorage();
