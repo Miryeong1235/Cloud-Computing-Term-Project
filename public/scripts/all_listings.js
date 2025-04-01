@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         for (const listing of listings) {
             if (displayedCount >= 12) break;
             try {
-                const user_response = await fetch(`http://localhost:3000/user/${listing.user_id}`);
+                // const user_response = await fetch(`http://localhost:3000/user/${listing.user_id}`);
+                const user_response = await fetch(`http://34.218.51.211:3000/user/${listing.user_id}`);
                 if (!user_response.ok) throw new Error("Failed to fetch user");
 
                 const user = await user_response.json();
