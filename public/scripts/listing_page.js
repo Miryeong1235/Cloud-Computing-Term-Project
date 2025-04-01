@@ -25,8 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const radioButton = document.getElementById(categoryParam);
 
     try {
-        // const response = await fetch(`http://localhost:3000/listings`);
-        const response = await fetch(`http://34.218.51.211:3000/listings`);
+        const response = await fetch(`${BASE_URL}/listings`);
         if (!response.ok) throw new Error("Failed to fetch listing");
 
         listings = await response.json();
@@ -121,8 +120,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const currentUserId = localStorage.getItem("user_id");
             filteredListings.forEach(async listing => {
                 try {
-                    // const user_response = await fetch(`http://localhost:3000/user/${listing.user_id}`);
-                    const user_response = await fetch(`http://34.218.51.211:3000/user/${listing.user_id}`);
+                    const user_response = await fetch(`${BASE_URL}/user/${listing.user_id}`);
                     if (!user_response.ok) throw new Error("Failed to fetch user");
 
                     const user = await user_response.json();

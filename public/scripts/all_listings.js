@@ -5,8 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     try {
         // Fetch data from localhost
-        // const response = await fetch(`http://localhost:3000/listings`);
-        const response = await fetch(`http://34.218.51.211:3000/listings`);
+        const response = await fetch(`${BASE_URL}/listings`);
 
         if (!response.ok) throw new Error("Failed to fetch listing");
         listings = await response.json();
@@ -14,17 +13,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const currentUserId = localStorage.getItem("user_id");
         let displayedCount = 0;
 
-        // listings.slice(0, 12).forEach(async listing => {
-        //     const user_response = (await fetch(`http://localhost:3000/user/${listing.user_id}`));
-        //     const user = await user_response.json();
-        //     const seller = user.user_fname + " " + user.user_lname;
-        //     displayListingCard(listing, seller);
-        // });
         for (const listing of listings) {
             if (displayedCount >= 12) break;
             try {
-                // const user_response = await fetch(`http://localhost:3000/user/${listing.user_id}`);
-                const user_response = await fetch(`http://34.218.51.211:3000/user/${listing.user_id}`);
+                const user_response = await fetch(`${BASE_URL}/user/${listing.user_id}`);
                 if (!user_response.ok) throw new Error("Failed to fetch user");
 
                 const user = await user_response.json();

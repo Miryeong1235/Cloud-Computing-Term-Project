@@ -75,8 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         try {
-            // const response = await fetch("http://localhost:3000/listings", {
-            const response = await fetch("http://34.218.51.211:3000/listings", {
+            const response = await fetch(`${BASE_URL}/listings`, {
                 method: "POST",
                 body: formData
             });
@@ -101,36 +100,6 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error("❌ Error:", error);
             alert("Failed to add listing.");
         }
-
-        // for (let i = 0; i < listingPhoto.length; i++) {
-        //     formData.append("listing_photo", listingPhoto[i]);
-        // }
-
-        // fetch("http://localhost:3000/listings", {
-        //     method: "POST",
-        //     body: formData
-        // })
-        //     .then(response => {
-        //         console.log("Response received:", response);
-
-
-        //         if (!response.ok) {
-        //             throw new Error("Failed to create listing.");
-        //         }
-
-        //         return response.json();
-        //     })
-        //     .then(result => {
-        //         console.log("✅ Listing created:", result);
-        //         alert("Listing successfully added!");
-
-        //         // Redirect to user profile page
-        //         window.location.href = "user_profile.html";
-        //     })
-        //     .catch(error => {
-        //         console.error("❌ Error:", error);
-        //         alert("Error adding listing.");
-        //     });
 
     })
 
