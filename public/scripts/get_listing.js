@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const listingId = pathSegments[pathSegments.length - 1];
 
     fetch(`http://localhost:3000/api/listings/${listingId}`, {
-    // fetch(`http://35.90.254.135:3000/api/listings/${listingId}`, {
+        // fetch(`http://35.90.254.135:3000/api/listings/${listingId}`, {
         method: "GET",
     })
         .then(response => {
@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return response.json();
         })
         .then(listing => {
+            document.getElementById("listing-loading").style.display = "none";
+            document.getElementById("listing-info").style.display = "flex";
             const currentCategoryBreadcrumb = document.getElementById("currentCategoryBreadcrumb");
             currentCategoryBreadcrumb.textContent = listing.listing_category;
 
@@ -34,8 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // `;
             // Update Image Carousel
             // const photos = listing.listing_photos || [listing.listing_photo];
-            const photos = listing.listing_photos && listing.listing_photos.length > 0 
-                ? listing.listing_photos 
+            const photos = listing.listing_photos && listing.listing_photos.length > 0
+                ? listing.listing_photos
                 : [listing.listing_photo || '/images/no_image_uploaded.jpg']; // Fallback to listing_photo or default image
 
             const carouselInner = document.querySelector(".carousel-inner");
@@ -76,12 +78,36 @@ document.addEventListener('DOMContentLoaded', () => {
             if (loggedInUserId === listing.user_id) {
                 document.querySelector(".message-btn").style.display = "none"; // Message Seller
                 document.querySelector(".buy-btn").style.display = "none"; // Buy Item
+            } else {
+                fetch(`http://localhost:3000/user/${listing.user_id}`, {
+                    // fetch(`http://35.90.254.135:3000/api/listings/${listingId}`, {
+                    method: "GET",
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Failed to create listing.");
+                        }
+
+                        return response.json();
+                    })
+                    .then(user => {
+                        // handle whatsapp
+                        document.querySelector(".message-btn").addEventListener("click", () => {
+                            const phone = user.user_phone?.replace(/\D/g, "");
+                            if (!phone) {
+                                return alert("Seller phone number is not available.");
+                            }
+
+                            const message = encodeURIComponent(`Hi! I'm interested in your listing "${listing.listing_name}" on ReloCash.`);
+                            const whatsappURL = `https://wa.me/${phone}?text=${message}`;
+
+                            window.open(whatsappURL, "_blank");
+                        });
+                    })
+
             }
         })
         .catch(error => {
             console.error("❌ Error:", error);
-            // alert("Error adding listing.");
         })
-
-
 })

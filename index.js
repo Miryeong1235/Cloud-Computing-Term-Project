@@ -4,7 +4,7 @@ const AWS = require('aws-sdk');
 const { v4: uuidv4 } = require('uuid');
 const multer = require("multer");
 const multerS3 = require("multer-s3");
-const upload = multer();
+// const upload = multer();
 require('dotenv').config();
 const cors = require("cors");
 const path = require("path");
@@ -638,52 +638,52 @@ app.get("/api/listings/:listing_id", async (req, res) => {
 /**
  * posting a listing endpoint
  */
-const multiUpload = upload.array("images");
-app.post("/listings", multiUpload, async (req, res) => {
-    console.log(`multi upload --<<>>> ${multiUpload}`)
-    try {
-        const listingData = JSON.parse(req.body.listing);
-        const uploadedPhotos = [];
+// const multiUpload = upload.array("images");
+// app.post("/listings", multiUpload, async (req, res) => {
+//     console.log(`multi upload --<<>>> ${multiUpload}`)
+//     try {
+//         const listingData = JSON.parse(req.body.listing);
+//         const uploadedPhotos = [];
 
-        for (const file of req.files) {
-            const listing_id = uuidv4(); // Or re-use one for all files
-            const s3Params = {
-                Bucket: "relocash-listings-images",
-                Key: `listings/${listing_id}_${file.originalname}`,
-                Body: file.buffer,
-                ContentType: file.mimetype
-            };
+//         for (const file of req.files) {
+//             const listing_id = uuidv4(); // Or re-use one for all files
+//             const s3Params = {
+//                 Bucket: "relocash-listings-images",
+//                 Key: `listings/${listing_id}_${file.originalname}`,
+//                 Body: file.buffer,
+//                 ContentType: file.mimetype
+//             };
 
-            const uploadResult = await s3.upload(s3Params).promise();
-            uploadedPhotos.push(uploadResult.Location);
-        }
+//             const uploadResult = await s3.upload(s3Params).promise();
+//             uploadedPhotos.push(uploadResult.Location);
+//         }
 
-        const params = {
-            TableName: "relocash_listings",
-            Item: {
-                listing_id: uuidv4(),
-                user_id: listingData.user_id,
-                listing_name: listingData.listing_name,
-                listing_description: listingData.listing_description,
-                listing_price: listingData.listing_price,
-                listing_category: listingData.listing_category,
-                listing_isFree: listingData.listing_isFree,
-                listing_photo: uploadedPhotos[0], // Primary image
-                listing_photos: uploadedPhotos,   // All images
-                listing_condition: listingData.listing_condition,
-                listing_isAvailable: true,
-                listing_location: listingData.listing_location
-            }
-        };
+//         const params = {
+//             TableName: "relocash_listings",
+//             Item: {
+//                 listing_id: uuidv4(),
+//                 user_id: listingData.user_id,
+//                 listing_name: listingData.listing_name,
+//                 listing_description: listingData.listing_description,
+//                 listing_price: listingData.listing_price,
+//                 listing_category: listingData.listing_category,
+//                 listing_isFree: listingData.listing_isFree,
+//                 listing_photo: uploadedPhotos[0], // Primary image
+//                 listing_photos: uploadedPhotos,   // All images
+//                 listing_condition: listingData.listing_condition,
+//                 listing_isAvailable: true,
+//                 listing_location: listingData.listing_location
+//             }
+//         };
 
-        await dynamoDB.put(params).promise();
-        res.status(201).json({ message: "Listing created successfully", listing: params.Item });
+//         await dynamoDB.put(params).promise();
+//         res.status(201).json({ message: "Listing created successfully", listing: params.Item });
 
-    } catch (error) {
-        console.error("Upload error:", error);
-        res.status(500).json({ error: error.message });
-    }
-});
+//     } catch (error) {
+//         console.error("Upload error:", error);
+//         res.status(500).json({ error: error.message });
+//     }
+// });
 // app.post("/listings", upload.single("image"), async (req, res) => {
 //     try {
 //         const listingData = JSON.parse(req.body.listing); // Parse listing JSON
@@ -698,6 +698,64 @@ app.post("/listings", multiUpload, async (req, res) => {
 //         res.status(500).json({ error: error.message });
 //     }
 // });
+
+const fs = require("fs");
+// const path = require("path");
+const os = require("os");
+const uploadDir = "/efs/uploads";
+
+// Ensure the upload directory exists
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// Update multer to store in memory (no disk usage before saving to EFS)
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+app.post("/listings", upload.array("images"), async (req, res) => {
+    try {
+        const listingData = JSON.parse(req.body.listing);
+        const uploadedPhotos = [];
+
+        for (const file of req.files) {
+            const listing_id = uuidv4();
+            const filename = `${listing_id}_${file.originalname}`;
+            const filePath = path.join(uploadDir, filename);
+
+            fs.writeFileSync(filePath, file.buffer); // Save to EFS
+
+            uploadedPhotos.push(`/uploads/${filename}`); // Save relative path
+        }
+
+        const params = {
+            TableName: "relocash_listings",
+            Item: {
+                listing_id: uuidv4(),
+                user_id: listingData.user_id,
+                listing_name: listingData.listing_name,
+                listing_description: listingData.listing_description,
+                listing_price: listingData.listing_price,
+                listing_category: listingData.listing_category,
+                listing_isFree: listingData.listing_isFree,
+                listing_photo: uploadedPhotos[0],
+                listing_photos: uploadedPhotos,
+                listing_condition: listingData.listing_condition,
+                listing_isAvailable: true,
+                listing_location: listingData.listing_location
+            }
+        };
+
+        await dynamoDB.put(params).promise();
+        res.status(201).json({ message: "Listing created successfully", listing: params.Item });
+
+    } catch (error) {
+        console.error("Upload error:", error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
 
 /**
  * edit listing availability endpoint
@@ -715,6 +773,49 @@ app.patch("/listings/:listing_id/toggle-availability", async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+const addShipingInfo = async (shipping) => {
+    const params = {
+        TableName: "relocash_shippings",
+        Item: {
+            shipping_address1: shipping.shipping_address1,
+            shipping_address2: shipping.shipping_address1 || null,
+            shipping_city: shipping.shipping_city,
+            shipping_postal_code: shipping.shipping_postal_code,
+            shipping_province: shipping.shipping_province,
+            shipping_country: shipping.shipping_country
+        }
+    }
+    try {
+        await dynamoDB.put(params).promise();
+        console.log("User added successfully");
+        return params.Item;
+    } catch (error) {
+        console.error("Error adding user:", error);
+    }
+}
+
+
+/**
+ * add shipping information
+ */
+app.post("/shippings", async (req, res) => {
+    try {
+        const shippingData = req.body;
+
+        const newShipping = await addShipingInfo(shippingData)
+
+        res.status(201).json({
+            message: "shipping added successfully",
+            shipping: newShipping.shipping_id
+        })
+
+    } catch {
+        console.error("❌ Error in POST /shippings", error);
+        res.status(500).json({ error: error.message });
+    }
+})
+
 
 app.use(express.static("public"));
 
