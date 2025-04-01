@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.querySelector('.user-location').textContent = user.user_city;
 
         listings = await listings_response.json();
-        displayListings("All", listings, location);
+        displayListings("Available", listings, location);
     } catch (error) {
         console.error("❌ Error loading listing:", error);
     }
@@ -60,7 +60,10 @@ function displayListings(filter, listings, location) {
 
 function displayListingCard(listing, location) {
     let newcard = document.getElementById("postCardTemplate").content.cloneNode(true);
-    newcard.querySelector('.card-image').src = listing.listing_photo;
+    // newcard.querySelector('.card-image').src = listing.listing_photo;
+    if(listing.listing_photo) {
+        newcard.querySelector('.card-image').src = listing.listing_photo;
+    }
     newcard.querySelector('.card-title').textContent = listing.listing_name;
     newcard.querySelector('.card-price').textContent = listing.listing_isFree ? "Free" : `$${listing.listing_price}`;
     newcard.querySelector('.card-desc').textContent = listing.listing_description;
@@ -70,6 +73,12 @@ function displayListingCard(listing, location) {
 
     let cardDiv = newcard.querySelector('.card');
     cardDiv.setAttribute("data-id", listing.listing_id);
+
+    // Hide sell button if the item is marked as sold
+    let sellBtn = newcard.querySelector('.sell-btn');
+    if (!listing.listing_isAvailable) {
+        sellBtn.style.display = "none"; // Hide button
+    }
 
     // // ✅ Attach click event during creation
     // cardDiv.addEventListener("click", function () {
