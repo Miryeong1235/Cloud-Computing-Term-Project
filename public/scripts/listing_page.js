@@ -1,5 +1,5 @@
 let listings = []; // Store all listings
-import { displayListingCard } from './all_listings.js';
+// import { displayListingCard } from './all_listings.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const urlParams = new URLSearchParams(window.location.search);
     const categoryParam = urlParams.get("category") || "all_categories";
+    const radioButton = document.getElementById(categoryParam);
 
     try {
         const response = await fetch(`http://localhost:3000/listings`);
@@ -31,7 +32,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         listings = await response.json();
         console.log("Listings:", listings);
 
-        // updateDisplayedListings(categoryParam);
+        if (radioButton) {
+            radioButton.checked = true;
+        }
+        updateDisplayedListings(categoryParam);
 
 
     } catch (error) {
@@ -60,6 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.getElementById('clear-search-button').addEventListener('click', () => {
         document.getElementById('search-bar').value = ""; // Clear search input
+        document.getElementById("all_categories").checked = true;
         updateURL("all_categories"); // Reset category in the URL
         updateDisplayedListings("all_categories"); // Show all listings
     });
@@ -74,6 +79,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function updateDisplayedListings(selectedId) {
         // const selectedId = document.querySelector('input[name="category"]:checked').id;
+        const listingsContainer = document.getElementById("listings-go-here");
+        console.log("🔍 Clearing previous listings in updateDisplayedListings...");
+        listingsContainer.innerHTML = ""; // Clear listings before updating
 
         const searchInput = document.getElementById('search-bar');
         const searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
@@ -102,10 +110,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Function to display listings
     function displayListings(filteredListings) {
         const listingsContainer = document.getElementById("listings-go-here");
+        console.log("🔍 Clearing previous listings in display listings...");
         listingsContainer.innerHTML = ""; // Clear previous listings
 
         if (filteredListings.length === 0) {
+            console.log("⚠️ No listings found");
             listingsContainer.innerHTML = "<p>No listings found</p>";
+            return;
         } else {
             const currentUserId = localStorage.getItem("user_id");
             filteredListings.forEach(async listing => {
@@ -116,7 +127,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const user = await user_response.json();
                     const seller = `${user.user_fname} ${user.user_lname}`;
                     if ((!currentUserId || currentUserId !== user.user_id) &&
-                         listing.listing_isAvailable === true) {
+                        listing.listing_isAvailable === true) {
                         displayListingCard(listing, seller);
                     }
                 } catch (error) {
@@ -127,4 +138,31 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+function displayListingCard(listing, seller) {
+    //clone the new card
+    let newcard = document.getElementById("postCardTemplate").content.cloneNode(true);
+    //populate with title, image
+    if (listing.listing_photo) {
+        newcard.querySelector('.card-image').src = listing.listing_photo;
+    }
+    newcard.querySelector('.card-title').innerHTML = listing.listing_name;
+    // newcard.querySelector('.card-price').innerHTML = listing.listing_price;
+    newcard.querySelector('.card-price').textContent = listing.listing_isFree ? "Free" : `$${listing.listing_price}`;
+    newcard.querySelector('.card-desc').innerHTML = listing.listing_description;
+    // newcard.querySelector('.card-seller').innerHTML = seller
+    newcard.querySelector('.card-location').innerHTML = listing.listing_location;
 
+    // ✅ Add data-id for identification
+    let cardDiv = newcard.querySelector('.card');
+    cardDiv.setAttribute("data-id", listing.listing_id);
+
+    // ✅ Attach click event during creation
+    cardDiv.addEventListener("click", function () {
+        // console.log("inside here", listing.listing_id);
+        window.location.href = `/listings/${listing.listing_id}`; // ✅ Redirects to details page
+    });
+
+
+    //append to the posts
+    document.getElementById("listings-go-here").append(newcard);
+}

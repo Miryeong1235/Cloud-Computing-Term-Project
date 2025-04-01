@@ -24,7 +24,8 @@ function updateNavbar() {
     logoutButton.onclick = function () {
         localStorage.removeItem("user_id");
         localStorage.removeItem("user_location");
-        window.location.reload(); // Refresh to apply changes
+        window.location.href = "/index.html"
+        // window.location.reload(); // Refresh to apply changes
     };
 
     if (userId) {

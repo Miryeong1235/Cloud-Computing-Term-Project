@@ -30,6 +30,9 @@
     <!-- Link to styles of your own -->
     <link rel="stylesheet" href="./styles/style.css">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./images/relocash_favicon.png">
+
 </head>
 
 <body>
@@ -39,7 +42,7 @@
 
     <div id="navbar-container"></div>
 
-    <div class="container vh-100 d-flex align-items-center justify-content-center mt-4">
+    <div class="container d-flex align-items-center justify-content-center mt-large mb-2">
         <div class="row shadow-lg rounded p-4 w-100" id="info-form">
             <h2 class="text-center mb-4">Enter Information</h2>
 
@@ -79,7 +82,7 @@
                 </div>
 
                 <!-- Buyer's Information -->
-                <!-- <div class="mb-4">
+                <div class="mb-4">
                     <h4>Buyer's Information</h4>
                     <div class="mb-3">
                         <label for="buyer-address1" class="form-label">Address 1</label>
@@ -109,7 +112,7 @@
                             <input type="text" class="form-control" id="buyer-postal" name="seller-postal" required>
                         </div>
                     </div>
-                </div> -->
+                </div>
 
                 <!-- <a href="user_profile.html"><button type="submit" class="btn btn-primary w-100">Submit</button></a> -->
                 <div class="d-flex justify-content-end">
@@ -132,7 +135,7 @@
     <script src="/scripts/footer.js"></script>
 
     <script>
-        function handleSubmit(event) {
+        async function handleSubmit(event) {
             event.preventDefault(); // Prevent the form from submitting
 
             // Confirm submission
@@ -140,6 +143,21 @@
 
             // Redirect to user profile page if confirmed
             if (confirmation) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const listingParam = urlParams.get("listing_id");
+
+                try {
+                    const response = await fetch(`http://localhost:3000/listings/${listingParam}/toggle-availability`, {
+                    // const response = await fetch(`http://35.90.254.135:3000/listings/${listing.listing_id}/toggle-availability`, {
+                        method: "PATCH"
+                    });
+                    console.log(response)
+                
+                    if (!response.ok) throw new Error("Failed to toggle listing");
+                } catch (err) {
+                    console.error("Toggle error:", err);
+                    alert("❌ Failed to toggle listing status");
+                }
                 window.location.href = 'user_profile.html';
             }
         }
