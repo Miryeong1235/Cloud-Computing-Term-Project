@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         listings = await response.json();
         console.log("Listings:", listings);
 
-        if(radioButton) {
+        if (radioButton) {
             radioButton.checked = true;
         }
         updateDisplayedListings(categoryParam);
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const user = await user_response.json();
                     const seller = `${user.user_fname} ${user.user_lname}`;
                     if ((!currentUserId || currentUserId !== user.user_id) &&
-                         listing.listing_isAvailable === true) {
+                        listing.listing_isAvailable === true) {
                         displayListingCard(listing, seller);
                     }
                 } catch (error) {
@@ -142,14 +142,14 @@ function displayListingCard(listing, seller) {
     //clone the new card
     let newcard = document.getElementById("postCardTemplate").content.cloneNode(true);
     //populate with title, image
-    if(listing.listing_photo) {
+    if (listing.listing_photo) {
         newcard.querySelector('.card-image').src = listing.listing_photo;
     }
     newcard.querySelector('.card-title').innerHTML = listing.listing_name;
     // newcard.querySelector('.card-price').innerHTML = listing.listing_price;
     newcard.querySelector('.card-price').textContent = listing.listing_isFree ? "Free" : `$${listing.listing_price}`;
     newcard.querySelector('.card-desc').innerHTML = listing.listing_description;
-    newcard.querySelector('.card-seller').innerHTML = seller
+    // newcard.querySelector('.card-seller').innerHTML = seller
     newcard.querySelector('.card-location').innerHTML = listing.listing_location;
 
     // ✅ Add data-id for identification
