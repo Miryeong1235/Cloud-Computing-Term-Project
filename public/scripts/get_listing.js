@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return response.json();
         })
         .then(listing => {
+            console.log(listing)
             document.getElementById("listing-loading").style.display = "none";
             document.getElementById("listing-info").style.display = "flex";
             const currentCategoryBreadcrumb = document.getElementById("currentCategoryBreadcrumb");

@@ -702,7 +702,8 @@ app.get("/api/listings/:listing_id", async (req, res) => {
 const fs = require("fs");
 // const path = require("path");
 const os = require("os");
-const uploadDir = "/efs/uploads";
+// const uploadDir = "/efs/uploads";
+const uploadDir = path.join(__dirname, 'uploads');
 
 // Ensure the upload directory exists
 if (!fs.existsSync(uploadDir)) {
