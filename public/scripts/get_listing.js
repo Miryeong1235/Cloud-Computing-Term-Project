@@ -77,9 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const loggedInUserId = localStorage.getItem("user_id");
             if (loggedInUserId === listing.user_id) {
                 document.querySelector(".message-btn").style.display = "none"; // Message Seller
-                document.querySelector(".buy-btn").style.display = "none"; // Buy Item
+                // document.querySelector(".buy-btn").style.display = "none"; // Buy Item
             } else {
-                fetch(`${BASE_URL}/api/listings/${listingId}`, {
+                fetch(`${BASE_URL}/user/${listing.user_id}`, {
                     method: "GET",
                 })
                     .then(response => {
@@ -90,8 +90,27 @@ document.addEventListener('DOMContentLoaded', () => {
                         return response.json();
                     })
                     .then(user => {
+                        document.querySelector(".seller").textContent = `${user.user_fname} ${user.user_lname}`
                         // handle whatsapp
                         document.querySelector(".message-btn").addEventListener("click", () => {
+                            if (!loggedInUserId) {
+                                // Save the current page URL before redirecting
+                                localStorage.setItem("redirect_after_login", window.location.href);
+
+                                // Show SweetAlert and redirect to login page
+                                Swal.fire({
+                                    icon: "warning",
+                                    title: "You need to log in",
+                                    text: "Please log in to message the seller.",
+                                    confirmButtonText: "Go to Login",
+                                    allowOutsideClick: false
+                                }).then(() => {
+                                    window.location.href = "/sign_in.html";
+                                });
+                            
+                                return;
+                            }
+
                             const phone = user.user_phone?.replace(/\D/g, "");
                             if (!phone) {
                                 return alert("Seller phone number is not available.");

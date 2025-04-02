@@ -29,8 +29,25 @@ document.getElementById("signin-form").addEventListener("submit", async (e) => {
                 localStorage.setItem("user_id", data.user_id);
                 // console.log(data.user_details)
                 localStorage.setItem("user_location", data.user_details.user_city)
-                alert("✅ Login successful!");
-                window.location.href = "/";
+                // alert("✅ Login successful!");
+
+                Swal.fire({
+                    icon: "success",
+                    title: "Login Successful!",
+                    text: "You have successfully logged in.",
+                    timer: 2000, // Auto close after 2 seconds
+                    showConfirmButton: false
+                }).then(() => {
+                    const redirectUrl = localStorage.getItem("redirect_after_login");
+                    if (redirectUrl) {
+                        localStorage.removeItem("redirect_after_login");
+                        window.location.href = redirectUrl; // Redirect back to the previous page
+                    } else {
+                        window.location.href = "/"; // Default home page
+                    }
+                });
+
+                // window.location.href = "/";
             }
         })
         .catch(err => {

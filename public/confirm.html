@@ -27,6 +27,9 @@
     <!-- Google Icons (Material Design)-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     <!-- Link to styles of your own -->
     <link rel="stylesheet" href="./styles/style.css">
 
@@ -87,11 +90,28 @@
             const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
 
             cognitoUser.confirmRegistration(code, true, function (err, result) {
+                // if (err) {
+                //     alert("❌ Confirmation failed: " + err.message);
+                // } else {
+                //     alert("✅ Account confirmed! You can now log in.");
+                //     window.location.href = "sign_in.html";
+                // }
                 if (err) {
-                    alert("❌ Confirmation failed: " + err.message);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Confirmation Failed",
+                        text: err.message,
+                        confirmButtonText: "Try Again"
+                    });
                 } else {
-                    alert("✅ Account confirmed! You can now log in.");
-                    window.location.href = "sign_in.html";
+                    Swal.fire({
+                        icon: "success",
+                        title: "Account Confirmed!",
+                        text: "Your account has been successfully verified. You can now log in.",
+                        confirmButtonText: "Go to Login"
+                    }).then(() => {
+                        window.location.href = "sign_in.html";
+                    });
                 }
             });
         }
