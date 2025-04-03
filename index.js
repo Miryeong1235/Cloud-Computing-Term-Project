@@ -851,7 +851,8 @@ app.post("/shippings", async (req, res) => {
 app.use(express.static("public"));
 
 // Start server
-app.listen(3000, () => console.log("Server running on port 3000"));
+// app.listen(3000, () => console.log("Server running on port 3000"));
+app.listen(3000, '0.0.0.0', () => console.log("Server running on port 3000"));
 
 
 
