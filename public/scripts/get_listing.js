@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelector(".message-btn").style.display = "none"; // Message Seller
                 document.querySelector(".buy-btn").style.display = "none"; // Buy Item
             } else {
-                fetch(`${BASE_URL}/api/listings/${listingId}`, {
+                fetch(`${BASE_URL}/user/${localStorage.getItem("user_id")}`, {
                     method: "GET",
                 })
                     .then(response => {
