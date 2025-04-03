@@ -161,7 +161,14 @@ function displayListingCard(listing, seller) {
     newcard.querySelector('.card-title').innerHTML = listing.listing_name;
     // newcard.querySelector('.card-price').innerHTML = listing.listing_price;
     newcard.querySelector('.card-price').textContent = listing.listing_isFree ? "Free" : `$${listing.listing_price}`;
-    newcard.querySelector('.card-desc').innerHTML = listing.listing_description;
+    // newcard.querySelector('.card-desc').innerHTML = listing.listing_description;
+    // 👉 Truncate long descriptions just like in user_profile.js
+    const maxLengthDescription = 30;
+    const description = listing.listing_description || "";
+    newcard.querySelector('.card-desc').textContent =
+        description.length > maxLengthDescription
+            ? description.slice(0, maxLengthDescription) + "..."
+            : description;
     // newcard.querySelector('.card-seller').innerHTML = seller
     newcard.querySelector('.card-location').innerHTML = listing.listing_location;
 
