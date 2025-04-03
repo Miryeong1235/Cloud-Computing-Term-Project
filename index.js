@@ -793,7 +793,6 @@ app.post("/listings", upload.array("images"), async (req, res) => {
  */
 app.patch("/listings/:listing_id/toggle-availability", async (req, res) => {
     const listingId = req.params.listing_id;
-
     try {
         const updatedListing = await soldListingById(listingId);
         res.json({

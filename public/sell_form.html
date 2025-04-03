@@ -128,6 +128,7 @@
     <!---------------------------------------------->
     <!-- Link to scripts of your own -->
     <!-- <script src="./scripts/script.js"></script> -->
+    <script src="scripts/config.js"></script>
     <script src="/scripts/nav.js"></script>
     <script src="/scripts/footer.js"></script>
 
@@ -144,8 +145,7 @@
                 const listingParam = urlParams.get("listing_id");
 
                 try {
-                    // const response = await fetch(`http://localhost:3000/listings/${listingParam}/toggle-availability`, {
-                    const response = await fetch(`http://34.218.51.211:3000/listings/${listing.listing_id}/toggle-availability`, {
+                    const response = await fetch(`${BASE_URL}/listings/${listingParam}/toggle-availability`, {
                         method: "PATCH"
                     });
                     console.log(response)
