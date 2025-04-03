@@ -48,6 +48,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+    document.querySelectorAll('input[name="location"]').forEach(input => {
+        input.addEventListener('change', () => {
+            const selectedCategory = document.querySelector('input[name="category"]:checked').id;
+            updateDisplayedListings(selectedCategory);
+            updateURL(selectedCategory); // Update URL with location filter
+        });
+    });
+
+
     document.getElementById('search-button').addEventListener('click', () => {
         const selectedCategory = document.querySelector('input[name="category"]:checked');
         const categoryId = selectedCategory ? selectedCategory.id : "all_categories";
@@ -85,10 +94,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         const searchInput = document.getElementById('search-bar');
         const searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
         const showFreeOnly = document.getElementById('activeListings').checked; // Check if "Show free listings only" is checked
+        const selectedLocation = document.querySelector('input[name="location"]:checked')?.id || "all_locations"; // Get selected location
 
         let filteredListings = categoryMap[selectedId] === "all_categories"
             ? listings // Show all listings
             : listings.filter(item => item.listing_category === categoryMap[selectedId]);
+
+        if (selectedLocation !== "all_locations") {
+            filteredListings = filteredListings.filter(item => item.listing_location === selectedLocation);
+        }
 
         if (searchTerm) {
             filteredListings = filteredListings.filter(item =>
