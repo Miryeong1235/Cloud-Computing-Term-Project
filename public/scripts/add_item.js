@@ -39,8 +39,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function updateFileDisplay() {
-        fileNameDisplay.textContent = selectedFiles.length
-            ? selectedFiles.map(f => f.name).join(', ')
+        // fileNameDisplay.textContent = selectedFiles.length
+        //     ? selectedFiles.map(f => f.name).join(', ')
+        //     : '';
+        fileNameDisplay.innerHTML = selectedFiles.length
+            ? selectedFiles.map(f => `<div class="uploaded-filename">${f.name}</div>`).join('')
             : '';
     }
 

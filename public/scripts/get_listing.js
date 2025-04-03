@@ -59,6 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 // img.className = "d-block w-100";
                 img.className = "carousel-img";
 
+                // 👇 Add modal image click handler
+                img.addEventListener("click", () => {
+                    document.getElementById("imageModal").style.display = "block";
+                    document.getElementById("modalImg").src = img.src;
+                });
+
+
                 imgContainer.appendChild(img)
                 item.appendChild(imgContainer);
                 carouselInner.appendChild(item);
