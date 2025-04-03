@@ -60,8 +60,15 @@
 
     <main class="px-5">
         <h1 class="py-2">Items</h1>
-        <div id="listings-go-here" class="items-container d-flex gap-4 py-3">
+        <!-- <div id="listings-go-here" class="items-container d-flex gap-4 py-3">
+        </div> -->
+
+        <div class="scroll-card-container">
+            <div id="listings-go-here" class="scroll-card-row">
+                <!-- JS will inject cards here -->
+            </div>
         </div>
+
 
         <template id="postCardTemplate">
             <!-- <a href="item_page.html" class="text-decoration-none"> -->
@@ -83,6 +90,8 @@
             </div>
             <!-- </a> -->
         </template>
+
+
     </main>
 
     <div id="footer-container"></div>

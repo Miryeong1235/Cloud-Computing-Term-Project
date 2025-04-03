@@ -63,7 +63,13 @@ function displayListingCard(listing, location) {
     }
     newcard.querySelector('.card-title').textContent = listing.listing_name;
     newcard.querySelector('.card-price').textContent = listing.listing_isFree ? "Free" : `$${listing.listing_price}`;
-    newcard.querySelector('.card-desc').textContent = listing.listing_description;
+    // newcard.querySelector('.card-desc').textContent = listing.listing_description;
+
+    const maxLengthDescription = 30;
+    const description = listing.listing_description || "";
+    newcard.querySelector('.card-desc').textContent =
+        description.length > maxLengthDescription ? description.slice(0, maxLengthDescription) + "..." : description;
+
     newcard.querySelector('.card-location').textContent = location;
     newcard.querySelector('a[href="sell_form.html"]').href = `sell_form.html?listing_id=${listing.listing_id}`;
     // newcard.querySelector('a[href="item_page.html"]').href = `item_page.html?listing_id=${listing.listing_id}`;
